@@ -1,0 +1,1363 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>eBay 7月月报 · OGSM</title>
+<style>
+:root {
+  --bg: #f0f2f5;
+  --surface: #ffffff;
+  --surface2: #f8f9fa;
+  --border: #e2e5e9;
+  --border2: #cdd3d9;
+  --text: #1a1a2e;
+  --text2: #5c6370;
+  --text3: #8e94a0;
+  --amber: #e8590c;
+  --red: #e03131;
+  --red-bg: #fff0f0;
+  --green: #2b8a3e;
+  --green-bg: #ebfbee;
+  --blue: #1c7ed6;
+  --blue-bg: #e7f5ff;
+  --amber-bg: #fff9db;
+  --purple: #7950f2;
+  --purple-bg: #f8f0ff;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: -apple-system, "SF Pro Display", "PingFang SC", "Microsoft YaHei", sans-serif;
+  background: var(--bg); color: var(--text);
+  line-height: 1.6; padding: 48px 32px 80px;
+  max-width: 1340px; margin: 0 auto;
+}
+h1 { font-size: 28px; font-weight: 700; letter-spacing: -0.02em; }
+h2 { font-size: 20px; font-weight: 600; margin-bottom: 20px; display: flex; align-items: center; gap: 10px; }
+h3 { font-size: 14px; font-weight: 600; color: var(--text2); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 8px; }
+.meta { color: var(--text3); font-size: 13px; margin-top: 4px; }
+.tag { display: inline-flex; align-items: center; gap: 6px; padding: 3px 10px; border-radius: 12px; font-size: 12px; font-weight: 600; }
+.tag-green { background: var(--green-bg); color: var(--green); }
+.tag-yellow { background: var(--amber-bg); color: var(--amber); }
+.tag-red { background: var(--red-bg); color: var(--red); }
+.tag-blue { background: var(--blue-bg); color: var(--blue); }
+.tag-purple { background: var(--purple-bg); color: var(--purple); }
+.dot { width: 7px; height: 7px; border-radius: 50%; display: inline-block; }
+.dot-green { background: var(--green); animation: pulse 2s infinite; }
+.dot-amber { background: var(--amber); }
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.35} }
+
+/* KPI Row */
+.kpi-row { display: grid; grid-template-columns: repeat(4,1fr); gap: 16px; margin: 32px 0 40px; }
+.kpi-card {
+  background: var(--surface); border: 1px solid var(--border); border-radius: 12px;
+  padding: 20px 24px; transition: transform .25s ease, border-color .25s ease;
+}
+.kpi-card:hover { transform: translateY(-2px); border-color: var(--border2); }
+.kpi-label { font-size: 12px; color: var(--text3); font-weight: 500; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.06em; }
+.kpi-value { font-size: 32px; font-weight: 700; font-variant-numeric: tabular-nums; letter-spacing: -0.02em; margin-bottom: 4px; }
+.kpi-sub { font-size: 13px; color: var(--text2); }
+.kpi-sub .good { color: var(--green); }
+.kpi-sub .warn { color: var(--amber); }
+.kpi-sub .bad { color: var(--red); }
+.kpi-bar-wrap { height: 4px; background: var(--border); border-radius: 2px; margin-top: 10px; }
+.kpi-bar { height: 100%; border-radius: 2px; transition: width 1.2s ease .3s; }
+.bar-green { background: var(--green); }
+.bar-amber { background: var(--amber); }
+.bar-red { background: var(--red); }
+
+
+/* Text emphasis */
+.em { font-weight: 700; }
+.em-good { font-weight: 700; color: var(--green); }
+.em-warn { font-weight: 700; color: var(--amber); }
+.em-bad  { font-weight: 700; color: var(--red); }
+.data-table .num { font-weight: 600; }
+
+
+.section.collapsed .section-body { display: none; }
+.section.collapsed .sec-preview { display: block; }
+.section:not(.collapsed) .sec-preview { display: none; }
+.section.collapsed .sec-arrow { transform: rotate(-90deg); }
+.sec-preview { display: none; font-size: 12px; color: var(--text2); padding: 0 0 16px; line-height: 1.6; }
+.sec-preview b { color: var(--text); }
+
+/* Section */
+.section { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 28px 30px; margin-bottom: 24px; }
+.section-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 24px; flex-wrap: wrap; gap: 12px; cursor: pointer; user-select: none; }
+.section-header:hover .sec-arrow { color: var(--amber); }
+.sec-arrow { font-size: 14px; color: var(--text3); transition: transform .3s, color .2s; margin-left: 8px; }
+.section.collapsed .sec-arrow { transform: rotate(-90deg); }
+.section.collapsed .section-body { display: none; }
+.section.collapsed .section-header { margin-bottom: 8px; }
+
+/* OGSM Table */
+.ogsm-table { width: 100%; border-collapse: collapse; font-size: 13px; margin-bottom: 20px; }
+.ogsm-table th, .ogsm-table td { padding: 10px 14px; text-align: left; border-bottom: 1px solid var(--border); }
+.ogsm-table th { background: var(--surface2); font-weight: 600; color: var(--text2); font-size: 11px; text-transform: uppercase; letter-spacing: 0.05em; }
+.ogsm-table th:first-child { width: 14%; }
+.ogsm-table td:first-child { font-weight: 600; color: var(--text); white-space: nowrap; }
+.ogsm-table tr:hover td { background: var(--surface2); }
+.ogsm-table tr:last-child td { border-bottom: none; }
+
+/* Mini Cards */
+.mini-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px,1fr)); gap: 14px; margin-bottom: 20px; }
+.mini-card { background: var(--surface2); border: 1px solid var(--border); border-radius: 10px; padding: 16px 18px; }
+.mini-card .mc-label { font-size: 11px; color: var(--text3); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 4px; }
+.mini-card .mc-value { font-size: 22px; font-weight: 700; font-variant-numeric: tabular-nums; }
+.mini-card .mc-sub { font-size: 12px; color: var(--text2); margin-top: 2px; }
+
+/* Data Table */
+.data-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+.data-table th, .data-table td { text-align: right; padding: 9px 14px; border-bottom: 1px solid var(--border); }
+.data-table th:first-child, .data-table td:first-child { text-align: left; }
+.data-table .tx { text-align: left !important; }
+.data-table th { background: var(--surface2); font-weight: 600; color: var(--text2); font-size: 11px; text-transform: uppercase; letter-spacing: 0.05em; }
+.data-table tr:hover td { background: var(--surface2); }
+.data-table tr:last-child { font-weight: 700; }
+.data-table tr:last-child td { border-top: 1px solid var(--border2); border-bottom: none; }
+.num { font-variant-numeric: tabular-nums; font-family: "SF Mono", "Cascadia Code", "Consolas", monospace; }
+
+/* Reason Tags */
+.reason { font-size: 12px; color: var(--text); margin-top: 6px; line-height: 1.5; }
+.reason b { color: var(--amber); }
+
+/* Animations */
+@keyframes fadeUp { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
+.ani { animation: fadeUp .55s ease both; }
+.ani-d1 { animation-delay: .05s; } .ani-d2 { animation-delay: .10s; } .ani-d3 { animation-delay: .15s; } .ani-d4 { animation-delay: .20s; }
+.ani-d5 { animation-delay: .25s; } .ani-d6 { animation-delay: .30s; } .ani-d7 { animation-delay: .35s; } .ani-d8 { animation-delay: .40s; }
+.ani-d9 { animation-delay: .45s; } .ani-d10 { animation-delay: .50s; }
+
+/* Responsive */
+@media (max-width: 860px) {
+  body { padding: 32px 16px 60px; }
+  .kpi-row { grid-template-columns: repeat(2,1fr); }
+  h1 { font-size: 22px; }
+  .data-table { font-size: 12px; }
+  .data-table th, .data-table td { padding: 8px 10px; }
+}
+@media (max-width: 500px) {
+  .kpi-row { grid-template-columns: 1fr; }
+  .ogsm-table, .data-table { font-size: 11px; }
+  .ogsm-table th, .data-table th { font-size: 10px; }
+}
+
+@media (prefers-reduced-motion: reduce) { .ani { animation: none; } .dot-green { animation: none; } }
+
+/* Modal */
+.modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,.75); z-index: 1000; display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity .3s ease; backdrop-filter: blur(6px); }
+.modal-overlay.show { opacity: 1; pointer-events: auto; }
+.modal-box { background: var(--surface); border: 1px solid var(--border2); border-radius: 18px; padding: 32px; max-width: 580px; width: 92%; box-shadow: 0 24px 60px rgba(0,0,0,.5); transform: translateY(20px) scale(.96); transition: transform .35s cubic-bezier(.22,1,.36,1); }
+.modal-overlay.show .modal-box { transform: translateY(0) scale(1); }
+.modal-close { position: absolute; top: 16px; right: 20px; background: none; border: none; color: var(--text3); font-size: 22px; cursor: pointer; line-height: 1; padding: 4px 8px; border-radius: 6px; transition: color .2s,background .2s; }
+.modal-close:hover { color: var(--text); background: var(--surface2); }
+.modal-box { position: relative; }
+.modal-title { font-size: 18px; font-weight: 700; margin-bottom: 6px; color: var(--text); }
+.modal-sub { font-size: 13px; color: var(--text2); margin-bottom: 24px; }
+.kpi-clickable { cursor: pointer; position: relative; }
+.kpi-clickable::after { content: "点击查看站点分布"; position: absolute; top: 12px; right: 16px; font-size: 10px; color: var(--text3); opacity: 0; transition: opacity .25s; }
+.kpi-clickable:hover::after { opacity: 1; }
+.kpi-mom { font-size:11px; margin-top:4px; font-weight:600 }
+.kpi-mom.red { color:#ef4444 }
+.kpi-mom.green { color:#22c55e }
+
+/* Modal carousel */
+.carousel-wrap { position: relative; overflow: hidden; min-height: 360px; }
+.carousel-slides { display: flex; transition: transform .35s ease; }
+.carousel-slide { flex: 0 0 100%; box-sizing:border-box; overflow:hidden; padding: 0 28px; }
+.carousel-arrow { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(255,255,255,.08); border: 1px solid var(--border); color: #fff; width: 32px; height: 32px; border-radius: 50%; cursor: pointer; font-size: 15px; display: flex; align-items: center; justify-content: center; z-index: 2; transition: background .2s; }
+.carousel-arrow:hover { background: rgba(255,255,255,.15); }
+.carousel-arrow.left { left: 0; }
+.carousel-arrow.right { right: 0; }
+.carousel-dots { display: flex; justify-content: center; gap: 8px; margin-top: 12px; }
+.carousel-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--border); cursor: pointer; border: none; transition: background .2s; }
+.carousel-dot.active { background: #f59e0b; }
+
+/* Collapsible site cards */
+.site-toggle:hover { opacity: .8 }
+.expanded .site-detail { display: block !important }
+.expanded .toggle-arrow { transform: rotate(180deg) }
+.sku-code { color: #b45309; font-weight: 700 }
+.sku-gain { color: #22c55e }
+.sku-loss { color: #ef4444 }
+
+.inv-pill { display: inline-block; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 6px; padding: 2px 8px; margin: 1px 3px; font-size: 10px; color: var(--text2); cursor: default; transition: all .15s; white-space: nowrap; }
+.inv-pill:hover { background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.18); color: #fff; transform: translateY(-1px); box-shadow: 0 2px 6px rgba(0,0,0,0.3); }
+.inv-pill .sk { color: #fbbf24; font-weight: 600; }
+.inv-pill .am { color: #f87171; }
+</style>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.8/dist/chart.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0/dist/chartjs-plugin-datalabels.min.js"></script>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="ani ani-d1" style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:12px;margin-bottom:8px">
+  <div>
+    <h1>eBay 7月经营月报</h1>
+    <div class="meta">数据截止 2026-08-02 · 销售中心 三方渠道 · 黎康杰</div>
+  </div>
+  <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
+    <span class="tag tag-green"><span class="dot dot-green"></span>广告达标</span>
+    <span class="tag tag-green"><span class="dot dot-green"></span>库存达标</span>
+    <span class="tag tag-yellow"><span class="dot dot-amber"></span>销售未达标</span>
+  </div>
+</div>
+
+<!-- OGSM KPI Row -->
+<div class="kpi-row">
+  <div class="kpi-card ani ani-d2 kpi-clickable" onclick="openModal('siteModal')">
+    <div class="kpi-label">O1 月销售额</div>
+    <div class="kpi-value">¥183万</div>
+    <div class="kpi-sub">目标 ¥200万 · <span class="warn">达成率 91.4%</span></div>
+    <div class="kpi-bar-wrap"><div class="kpi-bar bar-amber" style="width:91.4%"></div></div>
+    <div class="kpi-mom red">环比6月 ↓2.4%</div>
+  </div>
+  <div class="kpi-card ani ani-d3 kpi-clickable" onclick="openModal('adModal')">
+    <div class="kpi-label">O2 广告成本占比</div>
+    <div class="kpi-value" style="color:var(--green)">5.78%</div>
+    <div class="kpi-sub">目标 <7% · <span class="good">达标 ✓</span></div>
+    <div class="kpi-bar-wrap"><div class="kpi-bar bar-green" style="width:82.6%"></div></div>
+    <div class="kpi-mom red">环比6月 ↑0.17pp</div>
+  </div>
+  <div class="kpi-card ani ani-d4 kpi-clickable" onclick="openModal('invModal')">
+    <div class="kpi-label">O3 90天积压库存</div>
+    <div class="kpi-value" style="color:var(--amber)">¥40.0万</div>
+    <div class="kpi-sub">目标 <¥40万 · <span class="good">刚好达标 ✓</span></div>
+    <div class="kpi-bar-wrap"><div class="kpi-bar bar-amber" style="width:100%"></div></div>
+    <div class="kpi-mom green">环比6月 ↓0.3%</div>
+  </div>
+  <div class="kpi-card ani ani-d4 kpi-clickable" onclick="openModal('profitModal')">
+    <div class="kpi-label">O4 · 月毛利额（不含渠道其他费）</div>
+    <div class="kpi-value" style="color:var(--green)">¥31.6万</div>
+    <div class="kpi-sub">目标 ¥29.9万 · <span class="good">达成106.0% ✓</span></div>
+    <div class="kpi-bar-wrap"><div class="kpi-bar bar-green" style="width:100%"></div></div>
+    <div class="kpi-mom green">超目标¥1.7万</div>
+  </div>
+  <div class="kpi-card ani ani-d5 kpi-clickable" onclick="openModal('newModal')">
+    <div class="kpi-label">新品达成率</div>
+    <div class="kpi-value" style="color:var(--amber)">61.3%</div>
+    <div class="kpi-sub">销量4249/6926件 · ¥60.4万</div>
+    <div class="kpi-mom green">UK 92.4% 最优</div>
+  </div>
+</div>
+
+<!-- Modal 1: Site GMV + Ken/Cora -->
+<div class="modal-overlay" id="siteModal" onclick="if(event.target===this)closeModal('siteModal')">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModal('siteModal')">&times;</button>
+    <div class="carousel-wrap">
+      <button class="carousel-arrow left" onclick="slideCarousel('siteModal',-1)">◀</button>
+      <button class="carousel-arrow right" onclick="slideCarousel('siteModal',1)">▶</button>
+      <div class="carousel-slides" id="siteModal_slides">
+        <!-- Slide 1: Site GMV -->
+        <div class="carousel-slide">
+          <div class="modal-title">7月各站点GMV分布</div>
+          <div class="modal-sub">总GMV $252,337 · 7个站点</div>
+          <div style="max-width:520px;margin:0 auto"><canvas id="chart_site"></canvas></div>
+        </div>
+        <!-- Slide 2: Ken vs Cora -->
+        <div class="carousel-slide">
+          <div class="modal-title">销售负责人对比</div>
+          <div class="modal-sub">总GMV $252,337 · Ken(US+DE) vs Cora(AU+UK)</div>
+          <div style="display:flex;gap:20px;align-items:center;justify-content:center;flex-wrap:wrap">
+            <div style="max-width:280px"><canvas id="chart_site_ken"></canvas></div>
+            <div style="font-size:13px;color:var(--text2);line-height:2.2">
+              <div style="margin-bottom:10px"><span style="display:inline-block;width:12px;height:12px;border-radius:3px;background:#3b82f6;margin-right:8px;vertical-align:middle"></span><b style="color:#3b82f6;font-size:15px">Ken</b> US+DE · 4店</div>
+              <div style="padding-left:20px">GMV <b style="color:var(--text);font-size:16px">$134,130</b> (53.2%)</div>
+              <div style="padding-left:20px;margin-top:2px">目标 ¥120.1万<span class="tag tag-yellow" style="font-size:11px;margin-left:6px">达成率 81.0%</span></div>
+              <div style="margin:16px 0 10px"><span style="display:inline-block;width:12px;height:12px;border-radius:3px;background:#22c55e;margin-right:8px;vertical-align:middle"></span><b style="color:#22c55e;font-size:15px">Cora</b> AU+UK · 3店</div>
+              <div style="padding-left:20px">GMV <b style="color:var(--text);font-size:16px">$118,207</b> (46.8%)</div>
+              <div style="padding-left:20px;margin-top:2px">目标 ¥80.1万<span class="tag tag-green" style="font-size:11px;margin-left:6px">达成率 107.0%</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="carousel-dots">
+      <button class="carousel-dot active" onclick="slideCarousel('siteModal',0,0)"></button>
+      <button class="carousel-dot" onclick="slideCarousel('siteModal',0,1)"></button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal 2: Ad ACOAS by Store + Per-site -->
+<div class="modal-overlay" id="adModal" onclick="if(event.target===this)closeModal('adModal')">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModal('adModal')" style="z-index:3">&times;</button>
+    <div class="carousel-wrap">
+      <button class="carousel-arrow left" onclick="slideCarousel('adModal',-1)" style="z-index:3">◀</button>
+      <button class="carousel-arrow right" onclick="slideCarousel('adModal',1)" style="z-index:3">▶</button>
+      <div class="carousel-slides" id="adModal_slides">
+        <div class="carousel-slide">
+          <div class="modal-title">各店铺广告效率对比</div>
+          <div class="modal-sub">总广告费 $14,579 · 整体ACOAS 5.78% · ROAS 12.32 · 目标<7%</div>
+          <div style="max-width:500px;margin:0 auto"><canvas id="chart_ad"></canvas></div>
+        </div>
+        <div class="carousel-slide">
+          <div class="modal-title">各站点广告成本对比</div>
+          <div class="modal-sub">总广告费 $14,579 · <span style="color:var(--amber);font-weight:700">UK 7.05% 临近超标</span> · <span style="color:var(--red);font-weight:700">DE 7.11% 超标</span></div>
+          <div style="max-width:450px;margin:0 auto"><canvas id="chart_ad_site"></canvas></div>
+        </div>
+      </div>
+    </div>
+    <div class="carousel-dots">
+      <button class="carousel-dot active" onclick="slideCarousel('adModal',0,0)"></button>
+      <button class="carousel-dot" onclick="slideCarousel('adModal',0,1)"></button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal 3: Inventory Aging -->
+<div class="modal-overlay" id="invModal" onclick="if(event.target===this)closeModal('invModal')">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModal('invModal')" style="z-index:3">&times;</button>
+    <div class="carousel-wrap">
+      <button class="carousel-arrow left" onclick="slideCarousel('invModal',-1)" style="z-index:3">◀</button>
+      <button class="carousel-arrow right" onclick="slideCarousel('invModal',1)" style="z-index:3">▶</button>
+      <div class="carousel-slides" id="invModal_slides">
+        <div class="carousel-slide">
+          <div class="modal-title">库存库龄分布</div>
+          <div class="modal-sub">总库存 ¥171.4万 · 90天+积压 ¥40.0万 (23.3%)</div>
+          <div style="max-width:440px;margin:0 auto"><canvas id="chart_inv"></canvas></div>
+        </div>
+        <div class="carousel-slide">
+          <div class="modal-title">各站点90天+积压库存</div>
+          <div class="modal-sub">总积压 ¥40.1万 · 各站点积压金额分布</div>
+          <div style="max-width:440px;margin:0 auto"><canvas id="chart_inv_site"></canvas></div>
+        </div>
+      </div>
+    </div>
+    <div class="carousel-dots">
+      <button class="carousel-dot active" onclick="slideCarousel('invModal',0,0)"></button>
+      <button class="carousel-dot" onclick="slideCarousel('invModal',0,1)"></button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal 5: Profit - Site BP + Ken/Cora -->
+<div class="modal-overlay" id="profitModal" onclick="if(event.target===this)closeModal('profitModal')">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModal('profitModal')" style="z-index:3">&times;</button>
+    <div class="carousel-wrap">
+      <button class="carousel-arrow left" onclick="slideCarousel('profitModal',-1)" style="z-index:3">◀</button>
+      <button class="carousel-arrow right" onclick="slideCarousel('profitModal',1)" style="z-index:3">▶</button>
+      <div class="carousel-slides" id="profitModal_slides">
+        <div class="carousel-slide">
+          <div class="modal-title">各站点毛利额构成</div>
+          <div class="modal-sub">总毛利 ¥316,470 · 目标 ¥298,517 (106% ✓) · US+AU占74%</div>
+          <div style="max-width:450px;margin:0 auto"><canvas id="chart_profit"></canvas></div>
+        </div>
+        <div class="carousel-slide">
+          <div class="modal-title">各站点毛利率对比</div>
+          <div class="modal-sub">AU 22.2%最高 · UK 21.8% · US 20.1% · DE 17.1% · CA 8.1%</div>
+          <div style="max-width:500px;margin:0 auto"><canvas id="chart_profit_margin"></canvas></div>
+        </div>
+      </div>
+    </div>
+    <div class="carousel-dots">
+      <button class="carousel-dot active" onclick="slideCarousel('profitModal',0,0)"></button>
+      <button class="carousel-dot" onclick="slideCarousel('profitModal',0,1)"></button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal 4: New Product - Ken vs Cora -->
+<div class="modal-overlay" id="newModal" onclick="if(event.target===this)closeModal('newModal')">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModal('newModal')">&times;</button>
+    <div class="modal-title">新品销量 · 人员拆分</div>
+    <div class="modal-sub">总达成 4,249/6,926件(61.3%) · ¥60.4万 · Ken(US+DE) vs Cora(AU+UK)</div>
+    <div style="display:flex;gap:24px;align-items:center;flex-wrap:wrap;justify-content:center">
+      <div style="max-width:300px;flex:1;min-width:220px">
+        <canvas id="chart_new_pie"></canvas>
+      </div>
+      <div style="flex:1;min-width:200px;font-size:13px;color:var(--text2);line-height:2">
+        <div style="margin-bottom:12px"><span style="display:inline-block;width:12px;height:12px;border-radius:3px;background:#3b82f6;margin-right:8px;vertical-align:middle"></span><b style="color:var(--text)">Ken (黎康杰)</b> · US + DE</div>
+        <div style="padding-left:20px">
+          <div>销量 <b style="color:var(--blue);font-size:15px">2,807件</b> (66.0%)</div>
+          <div>收入 <b style="color:var(--blue)">¥41.5万</b> (68.7%)</div>
+          <div>毛利 <b style="color:var(--blue)">¥9.8万</b></div>
+          <div style="font-size:11px;color:var(--text3);margin-top:2px">US 2,363件(62%) + DE 444件(37%)</div>
+        </div>
+        <div style="margin:16px 0 12px"><span style="display:inline-block;width:12px;height:12px;border-radius:3px;background:#22c55e;margin-right:8px;vertical-align:middle"></span><b style="color:var(--text)">Cora (黎海谊)</b> · AU + UK</div>
+        <div style="padding-left:20px">
+          <div>销量 <b style="color:var(--green);font-size:15px">1,442件</b> (34.0%)</div>
+          <div>收入 <b style="color:var(--green)">¥18.9万</b> (31.3%)</div>
+          <div>毛利 <b style="color:var(--green)">¥4.2万</b></div>
+          <div style="font-size:11px;color:var(--text3);margin-top:2px">AU 799件(66%) + UK 643件(92%)</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ========== SECTION 1: 销售分析 ========== -->
+<div class="section collapsed ani ani-d6">
+  <div class="section-header">
+    <h2><span class="tag tag-yellow">销售</span> 销售分析</h2>
+    <div style="display:flex;align-items:center"><span class="tag tag-yellow" style="font-size:13px">差距 ¥18万</span><span class="sec-arrow">▼</span></div>
+  </div>
+  <div class="sec-preview"><b>GMV $252,337 达成91.4%</b> · US/UK双降(共-129件) · AU领涨+9.5%<br>🔑 德国素材切换后销售额+97.6%均价+44.2% · 法国本土化推进 · 加拿大分销8月重启 · 已清理30%低效链接</div>
+  <div class="section-body">
+
+  <table class="ogsm-table">
+    <tr><th>OGSM</th><th>内容</th></tr>
+    <tr>
+      <td>O · 目标</td>
+      <td>7月销售额 ¥2,001,329</td>
+    </tr>
+    <tr>
+      <td>G · 结果</td>
+      <td><b>7月 GMV $252,337 (约¥183万)</b>，达成率 <span class="tag tag-yellow" style="font-size:12px">91.4%</span>，差约¥18万。环比6月$258,491<b style="color:var(--red)">下降2.4%</b></td>
+    </tr>
+    <tr>
+      <td>S · 策略</td>
+      <td>🇫🇷 ChatGPT image-2推进法国本土化(8月完成20 SKU) · 🇩🇪 德国英文→德语素材切换后销售额+97.6%均价+44.2% · 🇨🇦 8月重启加拿大分销(¥1,500/月) · FBA分销占销量24.6%保持补货 · 翻新店解限+356%持续优化 · 已清30%低效链接</td>
+    </tr>
+    <tr>
+      <td>M · 衡量</td>
+      <td>完成补充刊登优化链接，法语本土化100% · 德语本土化素材更换完成100% · 加拿大恢复分销FBA，月GMV环比增长 >50%</td>
+    </tr>
+  </table>
+
+  <h3>各站点SKU环比分析</h3>
+
+  <!-- Site MoM summary cards -->
+  <div class="mini-grid" style="grid-template-columns: repeat(7,1fr)">
+    <div class="mini-card" style="text-align:center;padding:12px 8px"><div class="mc-label">US</div><div class="mc-value" style="font-size:18px;color:#ef4444">-8.7%</div><div class="mc-sub" style="color:#ef4444">1,071→978件</div></div>
+    <div class="mini-card" style="text-align:center;padding:12px 8px"><div class="mc-label">AU</div><div class="mc-value" style="font-size:18px;color:var(--green)">+5.2%</div><div class="mc-sub" style="color:var(--green)">557→586件</div></div>
+    <div class="mini-card" style="text-align:center;padding:12px 8px"><div class="mc-label">UK</div><div class="mc-value" style="font-size:18px;color:#ef4444">-9.1%</div><div class="mc-sub" style="color:#ef4444">395→359件</div></div>
+    <div class="mini-card" style="text-align:center;padding:12px 8px"><div class="mc-label">DE</div><div class="mc-value" style="font-size:18px;color:var(--green)">+16.3%</div><div class="mc-sub" style="color:var(--green)">178→207件</div></div>
+    <div class="mini-card" style="text-align:center;padding:12px 8px"><div class="mc-label">CA</div><div class="mc-value" style="font-size:18px;color:#ef4444">-28.0%</div><div class="mc-sub" style="color:#ef4444">25→18件</div></div>
+    <div class="mini-card" style="text-align:center;padding:12px 8px"><div class="mc-label">FR</div><div class="mc-value" style="font-size:18px;color:var(--green)">+60%</div><div class="mc-sub" style="color:var(--green)">5→8件</div></div>
+    <div class="mini-card" style="text-align:center;padding:12px 8px"><div class="mc-label">ES</div><div class="mc-value" style="font-size:18px;color:#ef4444">-57.1%</div><div class="mc-sub" style="color:#ef4444">7→3件</div></div>
+  </div>
+
+  <!-- Main 4 sites: detailed MoM with revenue & inventory -->
+  <div style="display:flex;flex-direction:column;gap:14px;margin-top:18px">
+    <!-- US -->
+    <div style="background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:16px">
+      <div class="site-toggle" onclick="this.parentElement.classList.toggle('expanded')" style="cursor:pointer;display:flex;justify-content:space-between;align-items:center">
+        <div>
+          <span style="font-size:14px;font-weight:700;color:#ef4444">US</span>
+          <span style="font-size:12px;color:var(--text2);margin-left:8px">1,071→978件 环比-8.7%</span>
+          <span style="font-size:12px;color:#ef4444;margin-left:6px">收入影响 -$17,440</span>
+          <span style="font-size:11px;color:var(--text);margin-left:10px">🔻DMX控制器/PocketX萎缩(EC6745缺货-$1,791)，EC1790 Arena +9件未能止住整体跌势</span>
+        </div>
+        <span class="toggle-arrow" style="color:var(--text3);font-size:12px;transition:transform .25s">▼</span>
+      </div>
+      <div class="site-detail" style="font-size:11px;color:var(--text2);line-height:2;display:none;margin-top:8px">
+        <div style="color:var(--green);margin-bottom:2px"><b>↑ 增长Top5</b></div>
+        <div><span class="sku-code">EC889X6</span> 效果器连接线6条: 0→13 +13件 <span class="sku-gain">增收+$280</span> 库存48 库销比3.7</div>
+        <div><span class="sku-code">MK3063</span> BCC-100电木吉他: 6→17 +11件 <span class="sku-gain">增收+$962</span> 库存0 ⚠库销比0.0</div>
+        <div><span class="sku-code">EC7245</span> DP-3效果器电源: 11→21 +10件 <span class="sku-gain">增收+$348</span> 库存6 ⚠无到货+库销比0.3</div>
+        <div><span class="sku-code">EB015</span> EFL-1长笛: 9→18 +9件 <span class="sku-gain">增收+$789</span> 库存1 ⚠库销比0.1-即将缺货</div>
+        <div><span class="sku-code">EC1790</span> Arena 2000效果器: 5→14 +9件 <span class="sku-gain">增收+$1,514</span> 库存43 库销比2.7 ⚠无到货</div>
+        <div style="color:#ef4444;margin:6px 0 2px"><b>↓ 下降Top5</b></div>
+        <div><span class="sku-code">EC7031</span> PocketX综合效果器: 27→5 -22件 <span class="sku-loss">损失-$1,265</span> 库存8 库销比2.7</div>
+        <div><span class="sku-code">EC7520</span> Pocket Amp: 21→6 -15件 <span class="sku-loss">损失-$520</span> 库存21 库销比3.5</div>
+        <div><span class="sku-code">EC6745</span> DMX512无线发射器: 15→1 -14件 <span class="sku-loss">损失-$1,791</span> 库存0 🔴缺货</div>
+        <div><span class="sku-code">EC7278</span> Starrypad Mini: 16→3 -13件 <span class="sku-loss">损失-$442</span> 库存25 库销比12.5</div>
+        <div><span class="sku-code">MK3080</span> EAG-100黑色: 15→3 -12件 <span class="sku-loss">损失-$778</span> 库存0 🔴缺货</div>
+        <div style="margin:8px 0 2px;font-weight:700;color:var(--text)">销量Top10</div>
+        <div><span class="sku-code">EC7286</span> Flash Tuner: 25→25 ±0 库存0</div>
+        <div><span class="sku-code">EC7032</span> DB-P100效果器板: 14→23 +9 <span class="sku-gain">+$586</span> 库存15</div>
+        <div><span class="sku-code">EC6864</span> DEP-1S电钢原木色: 14→21 +7 <span class="sku-gain">+$1,202</span> 库存35</div>
+        <div><span class="sku-code">EC7245</span> DP-3效果器电源: 11→21 +10 <span class="sku-gain">+$348</span></div>
+        <div><span class="sku-code">EC1048</span> 效果器线6条: 22→21 -1 库存36</div>
+        <div><span class="sku-code">EB015</span> EFL-1长笛: 9→18 +9 <span class="sku-gain">+$789</span></div>
+        <div><span class="sku-code">EC943</span> 乐器接线10Feet: 20→18 -2 库存83</div>
+        <div><span class="sku-code">MK3063</span> BCC-100电木吉他: 6→17 +11 <span class="sku-gain">+$962</span></div>
+        <div><span class="sku-code">EC7126</span> DED-200电鼓灰色: 12→15 +3 <span class="sku-gain">+$1,113</span></div>
+        <div><span class="sku-code">EC748</span> Yellow Fall延迟: 18→15 -3 库存0</div>
+        <div style="margin:6px 0 2px;font-weight:700;color:var(--amber)">收入Top10</div>
+        <div><span class="sku-code">EC7126</span> DED-200电鼓高配: 收入$5,567 12→15 <span class="sku-gain">+3</span> 库存0</div>
+        <div><span class="sku-code">EB2056</span> Eastar萨克斯ASD-Ⅱ: 收入$3,841 10→15 <span class="sku-gain">+5</span> 库存40</div>
+        <div><span class="sku-code">EC6864</span> DEP-1S电钢原木色: 收入$3,605 14→21 <span class="sku-gain">+7</span> 库存35</div>
+        <div><span class="sku-code">EC7417</span> HLX-500无头吉他: 收入$2,397 6→8 <span class="sku-gain">+2</span> 库存9</div>
+        <div><span class="sku-code">EC6807</span> HUSH-X日落色: 收入$2,392 13→12 -1 库存12</div>
+        <div><span class="sku-code">EC1790</span> Arena 2000效果器: 收入$2,355 5→14 <span class="sku-gain">+9</span> 库存43</div>
+        <div><span class="sku-code">EC7173</span> DED-70电鼓美标灰: 收入$2,320 15→13 -2 库存42</div>
+        <div><span class="sku-code">EC6871</span> DEP-20 LITE电钢: 收入$2,174 5→8 <span class="sku-gain">+3</span> 库存8</div>
+        <div><span class="sku-code">EC7030</span> HUSH-X PRO Black: 收入$2,035 1→6 <span class="sku-gain">+5</span> 库存8</div>
+        <div><span class="sku-code">EC7628</span> DST-95水波纹紫: 收入$1,969 13→14 +1 库存0</div>
+        <div style="margin:12px 0 4px;font-weight:700;color:#f59e0b">🎻 管弦乐三级产品线环比（开学季）</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px 20px;font-size:10px">
+          <div>🔺<b>长笛 +133%</b> 9→21件<span style="color:var(--text3)"> 成本率40%→41%</span><br><span style="color:var(--text3)">EB015 EFL-1 9→18 · EB2060 0→3</span></div>
+          <div>🔺<b>萨克斯 +60%</b> 10→16件<span style="color:var(--amber)"> 成本率54%→56%</span><br><span style="color:var(--text3)">EB2056 ASD-Ⅱ 10→15</span></div>
+          <div>🔺<b>莱雅琴 +75%</b> 4→7件<span style="color:var(--text3)"> 成本率27%→28%</span><br><span style="color:var(--text3)">EC2066 DLH-003 4→7</span></div>
+          <div>🔺<b>次中音 新增</b> 0→3件<span style="color:var(--text3)"> 成本率40%</span><br><span style="color:var(--text3)">EB2018 EDA-100 首次出单</span></div>
+          <div>🔻<b>长号 -91%</b> 11→1件<span style="color:var(--green)"> 成本率55%→40%</span><br><span style="color:var(--text3)">EB125/-D断崖 5→1 · EB2059 6→0</span></div>
+          <div>🔻<b>小提琴 -45%</b> 11→6件<span style="color:var(--green)"> 成本率32%→28%</span><br><span style="color:var(--text3)">EB0217 EVA-330 11→6</span></div>
+          <div>🔻<b>黑管 -16%</b> 19→16件<span style="color:var(--text3)"> 成本率45%→44%</span><br><span style="color:var(--text3)">EB075 ECL-330 16→11 · EB2058 3→5</span></div>
+          <div>🔻<b>小号 -25%</b> 12→9件<span style="color:var(--red)"> 成本率41%→55%</span><br><span style="color:var(--text3)">EB114 ETR-380 4→7 · EB2057D 5→2</span></div>
+        </div>
+        <div style="font-size:10px;color:var(--text3);margin-top:4px">管弦乐合计 76→79件(+4%) — 长笛/萨克斯开学季拉升，长号断崖需补货。小号成本率飙升13pp需排查，长号/小提琴成本率改善但对冲不了销量下滑</div>
+      </div>
+    </div>
+
+    <!-- AU -->
+    <div style="background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:16px">
+      <div class="site-toggle" onclick="this.parentElement.classList.toggle('expanded')" style="cursor:pointer;display:flex;justify-content:space-between;align-items:center">
+        <div>
+          <span style="font-size:14px;font-weight:700;color:var(--green)">AU</span>
+          <span style="font-size:12px;color:var(--text2);margin-left:8px">557→586件 环比+5.2%</span>
+          <span style="font-size:12px;color:var(--green);margin-left:6px">收入影响 +$5,605</span>
+          <span style="font-size:11px;color:var(--text);margin-left:10px">🔺DED-80灰色(+12件)和DEP-1S(+11件)双引擎驱动，但Flash Tuner库存告急⚠</span>
+        </div>
+        <span class="toggle-arrow" style="color:var(--text3);font-size:12px;transition:transform .25s">▼</span>
+      </div>
+      <div class="site-detail" style="font-size:11px;color:var(--text2);line-height:2;display:none;margin-top:8px">
+        <div style="color:var(--green);margin-bottom:2px"><b>↑ 增长Top5</b></div>
+        <div><span class="sku-code">EC7286</span> Flash Tuner: 4→17 +13件 <span class="sku-gain">+$283</span> 库存13 ⚠无到货+库销比0.8</div>
+        <div><span class="sku-code">EC7122</span> DED-80电鼓灰色: 6→18 +12件 <span class="sku-gain">+$2,427</span> 库存41 到货20 ✓</div>
+        <div><span class="sku-code">EC6862</span> DEP-1S便携电钢: 9→20 +11件 <span class="sku-gain">+$1,942</span> 库存4 ⚠即将缺货</div>
+        <div><span class="sku-code">EC974</span> DBM-10B翻书踏板: 5→14 +9件 <span class="sku-gain">+$458</span> 库存23 ⚠无到货</div>
+        <div><span class="sku-code">EC1144</span> 5A枫木鼓棒: 7→15 +8件 <span class="sku-gain">+$121</span> 库存50 ⚠无到货</div>
+        <div style="color:#ef4444;margin:6px 0 2px"><b>↓ 下降Top5</b></div>
+        <div><span class="sku-code">EC7466</span> 吉他排架原木色: 12→0 -12件 <span class="sku-loss">-$573</span> 库存0 🔴缺货</div>
+        <div><span class="sku-code">EC6961</span> DST-80B哑光黑: 12→1 -11件 <span class="sku-loss">-$1,376</span> 库存10 🟡库销比0.0-提价?</div>
+        <div><span class="sku-code">EC3415</span> DED-80电鼓高配: 11→1 -10件 <span class="sku-loss">-$2,030</span> 库存16</div>
+        <div><span class="sku-code">EC6784</span> DMK-25 PRO键盘: 9→0 -9件 <span class="sku-loss">-$510</span> 库存15 🟡库销比0.0-提价?</div>
+        <div><span class="sku-code">EC7172</span> DED-70电鼓澳标灰: 20→11 -9件 <span class="sku-loss">-$1,620</span> 库存66</div>
+        <div style="margin:8px 0 2px;font-weight:700;color:var(--text)">销量Top10</div>
+        <div><span class="sku-code">EC7273</span> MAMP5功放澳标: 32→26 -6 <span class="sku-loss">-$604</span> 库存21</div>
+        <div><span class="sku-code">EC6862</span> DEP-1S便携电钢: 9→20 +11 <span class="sku-gain">+$1,942</span> ⚠即将缺货</div>
+        <div><span class="sku-code">EC7315</span> DDA-20SE监听音箱: 18→19 +1 库存34</div>
+        <div><span class="sku-code">EC7122</span> DED-80电鼓灰色: 6→18 +12 <span class="sku-gain">+$2,427</span> ✓</div>
+        <div><span class="sku-code">EC7218</span> DST-80勃艮第红: 10→17 +7 <span class="sku-gain">+$879</span></div>
+        <div><span class="sku-code">EC7286</span> Flash Tuner: 4→17 +13 <span class="sku-gain">+$283</span></div>
+        <div><span class="sku-code">EC6856</span> DP-10折叠电钢: 8→16 +8 <span class="sku-gain">+$869</span> 库存7</div>
+        <div><span class="sku-code">EC7295</span> MAMP2功放澳标: 8→16 +8 <span class="sku-gain">+$849</span> 库存11</div>
+        <div><span class="sku-code">EC1144</span> 5A枫木鼓棒: 7→15 +8 <span class="sku-gain">+$121</span> 库存50</div>
+        <div><span class="sku-code">EC974</span> DBM-10B翻书踏板: 5→14 +9 <span class="sku-gain">+$458</span> 库存23</div>
+        <div style="margin:6px 0 2px;font-weight:700;color:var(--amber)">收入Top10</div>
+        <div><span class="sku-code">EC6675</span> DDP-80 PLUS电钢: 收入$3,950 2→8 <span class="sku-gain">+6</span> 库存4</div>
+        <div><span class="sku-code">EC7122</span> DED-80电鼓灰色: 收入$3,640 6→18 <span class="sku-gain">+12</span> 库存41 ✓</div>
+        <div><span class="sku-code">EC6862</span> DEP-1S便携电钢: 收入$3,532 9→20 <span class="sku-gain">+11</span> 库存4 ⚠即将缺货</div>
+        <div><span class="sku-code">EC7017</span> DEP-16S电钢木架: 收入$3,014 12→10 -2 库存0</div>
+        <div><span class="sku-code">EC6857</span> DED-200Max电鼓: 收入$2,993 6→7 +1 库存0</div>
+        <div><span class="sku-code">EC6936</span> DDP-95重锤电钢: 收入$2,736 4→8 <span class="sku-gain">+4</span> 库存6</div>
+        <div><span class="sku-code">EC7273</span> MAMP5功放澳标: 收入$2,617 32→26 <span class="sku-loss">-6</span> 库存21</div>
+        <div><span class="sku-code">EC7006</span> DEP-16电钢裸琴: 收入$2,573 10→12 +2 库存8</div>
+        <div><span class="sku-code">EC3132</span> DED-200电鼓标配套: 收入$2,566 6→7 +1 库存5</div>
+        <div><span class="sku-code">EC7218</span> DST-80勃艮第红: 收入$2,134 10→17 <span class="sku-gain">+7</span> 库存24</div>
+      </div>
+    </div>
+
+    <!-- UK -->
+    <div style="background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:16px">
+      <div class="site-toggle" onclick="this.parentElement.classList.toggle('expanded')" style="cursor:pointer;display:flex;justify-content:space-between;align-items:center">
+        <div>
+          <span style="font-size:14px;font-weight:700;color:#ef4444">UK</span>
+          <span style="font-size:12px;color:var(--text2);margin-left:8px">395→359件 环比-9.1%</span>
+          <span style="font-size:12px;color:#ef4444;margin-left:6px">收入影响 -$1,533</span>
+          <span style="font-size:11px;color:var(--text);margin-left:10px">🔻DST-80泥煤黑断崖(-18件)和DED-70系列(-14件)领跌，吉他排架缺货消失</span>
+        </div>
+        <span class="toggle-arrow" style="color:var(--text3);font-size:12px;transition:transform .25s">▼</span>
+      </div>
+      <div class="site-detail" style="font-size:11px;color:var(--text2);line-height:2;display:none;margin-top:8px">
+        <div style="color:var(--green);margin-bottom:2px"><b>↑ 增长Top5</b></div>
+        <div><span class="sku-code">EC7218</span> DST-80勃艮第红: 6→13 +7件 <span class="sku-gain">+$860</span> 库存12 ⚠无到货+库销比1.0</div>
+        <div><span class="sku-code">EC7352</span> DP-3电源英标: 2→8 +6件 <span class="sku-gain">+$199</span> 库存11 ⚠无到货+库销比1.4</div>
+        <div><span class="sku-code">EC943</span> 乐器接线10Feet: 11→17 +6件 <span class="sku-gain">+$59</span> 库存23 ⚠无到货+库销比1.4</div>
+        <div><span class="sku-code">EC1783</span> 轻音吉他日落色: 2→7 +5件 <span class="sku-gain">+$885</span> 库存23 ⚠无到货</div>
+        <div><span class="sku-code">EC748</span> Yellow Fall延迟: 0→5 +5件 <span class="sku-gain">+$134</span> 库存7 ⚠无到货+库销比1.4</div>
+        <div style="color:#ef4444;margin:6px 0 2px"><b>↓ 下降Top5</b></div>
+        <div><span class="sku-code">EC7216</span> DST-80泥煤黑: 23→5 -18件 <span class="sku-loss">-$1,851</span> 库存3 🟡库销比1.5-提价?</div>
+        <div><span class="sku-code">EC7466</span> 吉他排架原木色: 21→6 -15件 <span class="sku-loss">-$776</span> 库存0 🔴缺货</div>
+        <div><span class="sku-code">EC813</span> DP-1电源英标: 17→9 -8件 <span class="sku-loss">-$253</span> 库存43</div>
+        <div><span class="sku-code">EC7174</span> DED-70电鼓英标: 21→14 -7件 <span class="sku-loss">-$1,394</span> 库存43</div>
+        <div><span class="sku-code">EC7244</span> DED-70L电鼓英标: 13→6 -7件 <span class="sku-loss">-$1,575</span> 库存35</div>
+        <div style="margin:8px 0 2px;font-weight:700;color:var(--text)">销量Top10</div>
+        <div><span class="sku-code">EC943</span> 乐器接线10Feet: 11→17 +6 库存23</div>
+        <div><span class="sku-code">EC6920</span> MAMP5功放英标: 12→17 +5 <span class="sku-gain">+$537</span> 库存11</div>
+        <div><span class="sku-code">EC772</span> DT-1校音器: 18→14 -4 库存45</div>
+        <div><span class="sku-code">EC7174</span> DED-70电鼓英标: 21→14 -7 <span class="sku-loss">-$1,394</span></div>
+        <div><span class="sku-code">EC7218</span> DST-80勃艮第红: 6→13 +7 <span class="sku-gain">+$860</span></div>
+        <div><span class="sku-code">EC7002</span> DT-100鼓凳: 10→12 +2 库存35</div>
+        <div><span class="sku-code">EC7123</span> DED-80电鼓英标: 13→12 -1 库存34</div>
+        <div><span class="sku-code">MK3086</span> MAMP3功放英标: 8→12 +4 <span class="sku-gain">+$169</span> 库存8</div>
+        <div><span class="sku-code">EC7286</span> Flash Tuner: 7→11 +4 <span class="sku-gain">+$91</span> 库存6</div>
+        <div><span class="sku-code">EC813</span> DP-1电源英标: 17→9 -8 <span class="sku-loss">-$253</span> 库存43</div>
+        <div style="margin:6px 0 2px;font-weight:700;color:var(--amber)">收入Top10</div>
+        <div><span class="sku-code">EC7174</span> DED-70电鼓英标: 收入$2,789 21→14 <span class="sku-loss">-7</span> 库存43</div>
+        <div><span class="sku-code">EC7123</span> DED-80电鼓英标: 收入$2,653 13→12 -1 库存34</div>
+        <div><span class="sku-code">EC6920</span> MAMP5功放英标: 收入$1,827 12→17 <span class="sku-gain">+5</span> 库存11</div>
+        <div><span class="sku-code">EC7218</span> DST-80勃艮第红: 收入$1,597 6→13 <span class="sku-gain">+7</span> 库存12</div>
+        <div><span class="sku-code">EC6886</span> DED-200 Lite英标: 收入$1,544 1→5 <span class="sku-gain">+4</span> 库存13</div>
+        <div><span class="sku-code">EC7166</span> DED-70电鼓英标: 收入$1,447 8→7 -1 库存27</div>
+        <div><span class="sku-code">EC7244</span> DED-70L电鼓英标: 收入$1,350 13→6 <span class="sku-loss">-7</span> 库存35</div>
+        <div><span class="sku-code">EC1783</span> 轻音吉他日落色: 收入$1,240 2→7 <span class="sku-gain">+5</span> 库存23</div>
+        <div><span class="sku-code">EC6807</span> HUSH-X日落色: 收入$1,117 7→5 -2 库存0</div>
+        <div><span class="sku-code">EC7710</span> DED-70SE电鼓黑: 收入$1,096 4→6 +2 库存20</div>
+      </div>
+    </div>
+
+    <!-- DE -->
+    <div style="background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:16px">
+      <div class="site-toggle" onclick="this.parentElement.classList.toggle('expanded')" style="cursor:pointer;display:flex;justify-content:space-between;align-items:center">
+        <div>
+          <span style="font-size:14px;font-weight:700;color:var(--green)">DE</span>
+          <span style="font-size:12px;color:var(--text2);margin-left:8px">178→207件 环比+16.3%</span>
+          <span style="font-size:12px;color:var(--green);margin-left:6px">收入影响 +$5,897</span>
+          <span style="font-size:11px;color:var(--text);margin-left:10px">🔺HUSH-X PRO白(+5件+$1,500)和DST-80B(+8件)领涨，但DTL-100同期跌10件需关注</span>
+        </div>
+        <span class="toggle-arrow" style="color:var(--text3);font-size:12px;transition:transform .25s">▼</span>
+      </div>
+      <div class="site-detail" style="font-size:11px;color:var(--text2);line-height:2;display:none;margin-top:8px">
+        <div style="color:var(--green);margin-bottom:2px"><b>↑ 增长Top5</b></div>
+        <div><span class="sku-code">EC6961</span> DST-80B哑光黑: 3→11 +8件 <span class="sku-gain">+$928</span> 库存1 ⚠即将缺货</div>
+        <div><span class="sku-code">EC6693</span> B1音序器欧标: 6→14 +8件 <span class="sku-gain">+$652</span> 库存0 ⚠缺货风险</div>
+        <div><span class="sku-code">EC7278</span> Starrypad Mini: 1→8 +7件 <span class="sku-gain">+$266</span> 库存34 ⚠无到货</div>
+        <div><span class="sku-code">EC7764</span> MAMP5旧款三方: 0→6 +6件 <span class="sku-gain">+$604</span> 库存14 ⚠无到货</div>
+        <div><span class="sku-code">EC1417</span> DST-152R蓝色: 0→5 +5件 <span class="sku-gain">+$729</span> 库存0 ⚠无到货</div>
+        <div style="color:#ef4444;margin:6px 0 2px"><b>↓ 下降Top5</b></div>
+        <div><span class="sku-code">EC7109</span> DTL-100 tele: 23→13 -10件 <span class="sku-loss">-$644</span> 库存29</div>
+        <div><span class="sku-code">EC6508</span> MAMP5旧款欧标: 12→3 -9件 <span class="sku-loss">-$861</span> 库存0 🔴缺货</div>
+        <div><span class="sku-code">EC7175</span> DED-70电鼓欧标: 9→1 -8件 <span class="sku-loss">-$1,427</span> 库存29 🟡库销比0.0-提价?</div>
+        <div><span class="sku-code">MK3063</span> BCC-100电木吉他: 8→3 -5件 <span class="sku-loss">-$369</span> 库存6</div>
+        <div><span class="sku-code">EC6933</span> DEP-1S便携电钢: 11→8 -3件 <span class="sku-loss">-$489</span> 库存61</div>
+        <div style="margin:8px 0 2px;font-weight:700;color:var(--text)">销量Top10</div>
+        <div><span class="sku-code">EC6693</span> B1音序器欧标: 6→14 +8 <span class="sku-gain">+$652</span> ⚠缺货</div>
+        <div><span class="sku-code">EC7109</span> DTL-100 tele: 23→13 -10 <span class="sku-loss">-$644</span> 库存29</div>
+        <div><span class="sku-code">EC6961</span> DST-80B哑光黑: 3→11 +8 <span class="sku-gain">+$928</span> ⚠即将缺货</div>
+        <div><span class="sku-code">EC7029</span> HUSH-X PRO白: 5→10 +5 <span class="sku-gain">+$1,500</span> 库存0</div>
+        <div><span class="sku-code">EC6933</span> DEP-1S便携电钢: 11→8 -3 <span class="sku-loss">-$489</span> 库存61</div>
+        <div><span class="sku-code">EC7278</span> Starrypad Mini: 1→8 +7 <span class="sku-gain">+$266</span> 库存34</div>
+        <div><span class="sku-code">EC7184</span> DBM-50翻页器: 6→7 +1 库存20</div>
+        <div><span class="sku-code">EC6722</span> DEP-1便携电钢: 3→7 +4 <span class="sku-gain">+$552</span> 库存1 ⚠</div>
+        <div><span class="sku-code">EC6921</span> MAMP5功放欧标: 5→6 +1 库存0</div>
+        <div><span class="sku-code">EC7037</span> DDP-80升级款: 3→6 +3 <span class="sku-gain">+$1,110</span> 库存8</div>
+        <div style="margin:6px 0 2px;font-weight:700;color:var(--amber)">收入Top10</div>
+        <div><span class="sku-code">EC7029</span> HUSH-X PRO白: 收入$3,000 5→10 <span class="sku-gain">+5</span> 库存0</div>
+        <div><span class="sku-code">EC7037</span> DDP-80升级款: 收入$2,221 3→6 <span class="sku-gain">+3</span> 库存8</div>
+        <div><span class="sku-code">EC6942</span> DDP-95重锤白色: 收入$1,318 1→4 +3 库存57</div>
+        <div><span class="sku-code">EC6933</span> DEP-1S便携电钢: 收入$1,303 11→8 <span class="sku-loss">-3</span> 库存61</div>
+        <div><span class="sku-code">EC6961</span> DST-80B哑光黑: 收入$1,276 3→11 <span class="sku-gain">+8</span> 库存1 ⚠</div>
+        <div><span class="sku-code">EC6693</span> B1音序器欧标: 收入$1,142 6→14 <span class="sku-gain">+8</span> 库存0 ⚠</div>
+        <div><span class="sku-code">EC6722</span> DEP-1便携电钢: 收入$967 3→7 <span class="sku-gain">+4</span> 库存1 ⚠</div>
+        <div><span class="sku-code">EC7242</span> DED-70L电鼓欧标: 收入$855 4→4 ±0 库存8</div>
+        <div><span class="sku-code">EC7109</span> DTL-100 tele: 收入$838 23→13 <span class="sku-loss">-10</span> 库存29</div>
+        <div><span class="sku-code">EC1417</span> DST-152R蓝色: 收入$729 0→5 <span class="sku-gain">+5</span> 库存0 ⚠</div>
+      </div>
+    </div>
+  </div>
+  </div>
+
+  <div class="reason" style="margin-top:14px;margin-bottom:32px"><b>关键发现：</b>US和UK是主要拖累...<br><b style="color:var(--green)">策略亮点：</b>🇫🇷 法国站ChatGPT image-2出图本土化推进中 · 🇩🇪 德国素材切换后销售额+97.6%均价+44.2% · 🇨🇦 加拿大分销8月重启预计月增$1,500 · 🇩🇪 翻新店解限后+356% · 已清理30%效益差链接聚焦高投产</div>
+  </div>
+</div>
+
+<!-- ========== SECTION 2: 广告分析 ========== -->
+<div class="section collapsed ani ani-d7">
+  <div class="section-header">
+    <h2><span class="tag tag-green">广告</span> 广告分析</h2>
+    <div style="display:flex;align-items:center"><span class="tag tag-green" style="font-size:13px">ACOAS 5.78% ✓</span><span class="sec-arrow">▼</span></div>
+  </div>
+  <div class="sec-preview"><b>ACOAS 5.78% ✓达标</b> · <span style="color:var(--amber);font-weight:700">UK 7.05%临近超标</span> · <span style="color:var(--red);font-weight:700">DE 7.11%超标</span><br>🔑 7月欧洲流量下滑主动向AU+UK倾斜(ACOAS仅+0.06pp) · 每周巡检全量广告组 · 8月目标≤6%</div>
+  <div class="section-body">
+
+  <table class="ogsm-table">
+    <tr><th>OGSM</th><th>内容</th></tr>
+    <tr>
+      <td>O · 目标</td>
+      <td>广告成本占比(ACOAS) <b><7%</b></td>
+    </tr>
+    <tr>
+      <td>G · 结果</td>
+      <td><b>ACOAS 5.78%</b>，低于目标<b style="color:var(--green)">✓ 达标</b>。广告费$14,579，广告产生销售额$179,639，ROAS <b>12.3</b>。广告销售额占总GMV 71.2%</td>
+    </tr>
+    <tr>
+      <td>S · 策略</td>
+      <td>7月欧洲流量下滑→预算向AU+UK倾斜(ACOAS仅+0.06pp) · 8月若流量回升重返欧洲 · 每周巡检全量广告组排查低效 · ROI优组加预算 · 低效词降出价/暂停 · 目标ACOAS≤6% · AU/UK/DE站酌情参加5折站外广告 · US站大额点击优惠按广告成本情况选择性参与</td>
+    </tr>
+    <tr>
+      <td>M · 衡量</td>
+      <td>8月广告成本 <b><7%</b> · 7月广告费日均$470 · 环比6月广告费$14,495基本持平(+0.6%)</td>
+    </tr>
+  </table>
+
+  <div class="reason" style="margin-bottom:16px"><b>8月策略：</b>7月欧洲流量下滑，主动将预算向AU+UK倾斜，ACOAS仅+0.06pp可控。8月若欧洲流量回升将重新向欧洲倾斜。日常执行：每周巡检全量广告组（排查低效投放）、ROI优异组加预算扩流量、低效词降出价或暂停。目标ACOAS回归≤6%。</div>
+
+  <h3>店铺广告效率对比</h3>
+  <table class="data-table">
+    <tr><th>店铺</th><th>广告费</th><th>广告销售额</th><th>ROAS</th><th>ACOAS</th><th>广告依赖度</th><th>环比趋势</th></tr>
+    <tr>
+      <td>蓝易-美国店</td><td class="num">$8</td><td class="num">$389</td><td class="num" style="color:var(--green)">49.9</td><td class="num" style="color:var(--green)">0.46%</td><td class="num">23.1%</td><td style="font-size:11px;color:var(--text3)">7月新增店铺</td>
+    </tr>
+    <tr>
+      <td>音思达-美国翻新店</td><td class="num">$1,451 <span style="color:var(--green)">↓20%</span></td><td class="num">$15,619 <span style="color:var(--red)">↓8%</span></td><td class="num">10.8 <span style="color:var(--green)">↑1.4</span></td><td class="num">4.22% <span style="color:var(--green)">↓0.4pp</span></td><td class="num">45.4% <span style="color:var(--amber)">↑2.6pp</span></td><td style="font-size:11px;color:var(--text2)">广告费↓但依赖度↑，总销售降幅更大</td>
+    </tr>
+    <tr>
+      <td>奥铎-德国翻新店</td><td class="num">$84 <span style="color:var(--amber)">↑236%</span></td><td class="num">$1,149 <span style="color:var(--green)">↑91%</span></td><td class="num">13.6 <span style="color:var(--red)">↓10.4</span></td><td class="num">1.90% <span style="color:var(--amber)">↑1.1pp</span></td><td class="num">26.0% <span style="color:var(--amber)">↑6.4pp</span></td><td style="font-size:11px;color:var(--text2)">规模小波动大，翻新店因解限大幅加投</td>
+    </tr>
+    <tr>
+      <td>奥铎-德国店</td><td class="num">$15 <span style="color:var(--green)">↓33%</span></td><td class="num">$724 <span style="color:var(--red)">↓33%</span></td><td class="num">49.2 <span style="color:var(--green)">↑0.5</span></td><td class="num">1.15% <span style="color:var(--amber)">↑0.1pp</span></td><td class="num">57.4% <span style="color:var(--amber)">↑6.7pp</span></td><td style="font-size:11px;color:var(--text2)">自然流量占比下降，依赖度被动升高</td>
+    </tr>
+    <tr>
+      <td>奥铎-英国店</td><td class="num">$94 <span style="color:var(--green)">↓45%</span></td><td class="num">$1,481 <span style="color:var(--red)">↓40%</span></td><td class="num">15.7 <span style="color:var(--green)">↑1.3</span></td><td class="num">1.60% <span style="color:var(--green)">↓0.3pp</span></td><td class="num">25.1% <span style="color:var(--green)">↓2.5pp</span></td><td style="font-size:11px;color:var(--green)">广告依赖度降低，自然流量回升</td>
+    </tr>
+    <tr>
+      <td>音思达-澳洲店</td><td class="num">$124 <span style="color:var(--green)">↓58%</span></td><td class="num">$1,773 <span style="color:var(--red)">↓68%</span></td><td class="num">14.3 <span style="color:var(--red)">↓4.1</span></td><td class="num">2.35% <span style="color:var(--green)">↓1.4pp</span></td><td class="num">33.7% <span style="color:var(--green)">↓36pp</span></td><td style="font-size:11px;color:var(--text2)">总销售额收缩，广告同比压缩</td>
+    </tr>
+    <tr>
+      <td>音思达-美国店</td><td class="num">$4,228 <span style="color:var(--green)">↓4%</span></td><td class="num">$42,590 <span style="color:var(--green)">↑7%</span></td><td class="num">10.1 <span style="color:var(--green)">↑1.0</span></td><td class="num">7.88% <span style="color:var(--amber)">↑0.6pp</span></td><td class="num">79.4% <span style="color:var(--red)">↑13.3pp</span></td><td style="font-size:11px;color:var(--amber)">依赖度过高，需降低广告占比</td>
+    </tr>
+  </table>
+  </div>
+</div>
+
+<!-- ========== SECTION 3: 库存分析 ========== -->
+<div class="section collapsed ani ani-d8">
+  <div class="section-header">
+    <h2><span class="tag tag-green">库存</span> 库存分析</h2>
+    <div style="display:flex;align-items:center"><span class="tag tag-green" style="font-size:13px">积压 ¥40.0万 ✓</span><span class="sec-arrow">▼</span></div>
+  </div>
+  <div class="sec-preview"><b>积压 ¥399,684 ✓达标</b> · <span style="color:var(--amber);font-weight:700">UK 43.7%严重</span> · DE仅35.3%健康即将恶化<br>🔑 UK ¥14.9万按SKU分级处置(降价/捆绑) · 预警¥5.4万加推 · 目标UK≤35% AU≤15%</div>
+  <div class="section-body">
+
+  <table class="ogsm-table">
+    <tr><th>OGSM</th><th>内容</th></tr>
+    <tr>
+      <td>O · 目标</td>
+      <td>90天积压库存金额 <b><¥400,000</b></td>
+    </tr>
+    <tr>
+      <td>G · 结果</td>
+      <td>积压金额 <b>¥399,684</b>（占比23.3%），刚好达标<span class="tag tag-green" style="font-size:12px">✓</span>。库存总金额¥171.4万，可售¥163.5万，在途¥147.2万。积压占比23.3%较上月略降。</td>
+    </tr>
+    <tr>
+      <td>S · 策略</td>
+      <td>UK 90天+¥14.9万按SKU分级处置(降价/捆绑/推广) · 61-90天¥5.4万预警加推 · 暂停积压品类补货 · 目标UK≤35% AU≤15%(AU已25.9%→15.7%验证)</td>
+    </tr>
+    <tr>
+      <td>M · 衡量</td>
+      <td>90天积压金额 <b><¥300,000</b> · 90天积压占比 <b><18%</b> · 总库存¥171.6万</td>
+    </tr>
+  </table>
+
+  <div class="mini-grid">
+    <div class="mini-card">
+      <div class="mc-label">库存总金额</div>
+      <div class="mc-value">¥171.4万</div>
+      <div class="mc-sub">可售 ¥163.5万 + 在途 ¥147.2万</div>
+    </div>
+    <div class="mini-card">
+      <div class="mc-label">90天积压</div>
+      <div class="mc-value" style="color:var(--amber)">¥40.0万</div>
+      <div class="mc-sub">占比 23.3% · 目标 <¥40万</div>
+    </div>
+    <div class="mini-card">
+      <div class="mc-label">库销比(在库)</div>
+      <div class="mc-value">2.64</div>
+      <div class="mc-sub">可用6044件 ÷ 月销量2181</div>
+    </div>
+    <div class="mini-card">
+      <div class="mc-label">在途库存</div>
+      <div class="mc-value">¥147.2万</div>
+      <div class="mc-sub">3908件在途 · 需关注到货节奏</div>
+    </div>
+  </div>
+
+  <h3>站点库龄结构分析</h3>
+
+  <div class="mini-grid" style="grid-template-columns: repeat(5,1fr)">
+    <div class="mini-card" style="text-align:center"><div class="mc-label">US</div><div class="mc-value" style="color:var(--green)">¥7.8万</div><div class="mc-sub" style="color:var(--green)">90天+积压率13.2%</div></div>
+    <div class="mini-card" style="text-align:center"><div class="mc-label">AU</div><div class="mc-value" style="color:var(--amber)">¥8.0万</div><div class="mc-sub" style="color:var(--amber)">90天+积压率17.7%</div></div>
+    <div class="mini-card" style="text-align:center"><div class="mc-label">UK</div><div class="mc-value" style="color:var(--red)">¥14.9万</div><div class="mc-sub" style="color:var(--red)">90天+积压率43.8%</div></div>
+    <div class="mini-card" style="text-align:center"><div class="mc-label">DE</div><div class="mc-value" style="color:var(--red)">¥9.3万</div><div class="mc-sub" style="color:var(--red)">90天+积压率35.0%</div></div>
+    <div class="mini-card" style="text-align:center"><div class="mc-label">CA</div><div class="mc-value" style="color:var(--red)">¥1,356</div><div class="mc-sub" style="color:var(--red)">100%积压</div></div>
+  </div>
+
+  <!-- Per-site bracket detail -->
+  <div style="display:flex;flex-direction:column;gap:10px;margin-top:14px">
+    <!-- US -->
+    <div style="background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:14px">
+      <div class="site-toggle" onclick="this.parentElement.classList.toggle('expanded')" style="cursor:pointer;display:flex;justify-content:space-between;align-items:center">
+        <div><span style="font-size:14px;font-weight:700;color:var(--green)">US</span><span style="font-size:12px;color:var(--text2);margin-left:8px">总¥59.0万 · 90天+ ¥7.8万(13.2%)</span><span style="font-size:11px;color:var(--amber);margin-left:6px">⚡61-90天 ¥5.2万将滚入</span><span style="font-size:10px;color:var(--text3);margin-left:8px">EC1790 Arena ¥8,146和EC7176 ¥5,958即将滚入积压</span></div>
+        <span class="toggle-arrow" style="color:var(--text3);font-size:12px;transition:transform .25s">▼</span>
+      </div>
+      <div class="site-detail" style="font-size:11px;color:var(--text2);line-height:1.8;display:none;margin-top:6px">
+        <div style="color:var(--yellow);margin-bottom:4px"><b>⚡61-90天 ¥5.2万 (8.9%) 下月滚入:</b><br>
+          <span class="inv-pill"><span class="sk">EC1790</span> Arena <span class="am">¥8,146</span></span>
+          <span class="inv-pill"><span class="sk">EC7176</span> <span class="am">¥5,958</span></span>
+          <span class="inv-pill"><span class="sk">EC7241</span> <span class="am">¥5,154</span></span>
+          <span class="inv-pill"><span class="sk">EC7356</span> <span class="am">¥4,195</span></span>
+          <span class="inv-pill"><span class="sk">EC7480</span> <span class="am">¥3,504</span></span></div>
+        <div style="color:var(--amber);margin-bottom:4px"><b>🟡91-150天 积压 ¥3.0万 (5.1%):</b><br>
+          <span class="inv-pill"><span class="sk">EC7159</span> <span class="am">¥8,490</span></span>
+          <span class="inv-pill"><span class="sk">EC6864</span> DEP-1S <span class="am">¥5,529</span></span>
+          <span class="inv-pill"><span class="sk">EC7502</span> <span class="am">¥2,690</span></span>
+          <span class="inv-pill"><span class="sk">EC7216</span> DST-80 <span class="am">¥2,167</span></span>
+          <span class="inv-pill"><span class="sk">EC7501</span> <span class="am">¥2,044</span></span></div>
+        <div style="color:var(--amber);margin-bottom:4px"><b>151-180天 积压 ¥6,003 (1.0%):</b>
+          <span class="inv-pill"><span class="sk">EC7241</span> <span class="am">¥5,798</span></span>
+          <span class="inv-pill"><span class="sk">EC7031</span> <span class="am">¥204</span></span></div>
+        <div style="margin-top:2px;color:#f97316;margin-bottom:4px"><b>🟠181-270天 严重 ¥2.0万 (3.4%):</b><br>
+          <span class="inv-pill"><span class="sk">EC6792</span> <span class="am">¥2,971</span></span>
+          <span class="inv-pill"><span class="sk">EC6642</span> <span class="am">¥2,625</span></span>
+          <span class="inv-pill"><span class="sk">EC1790</span> Arena <span class="am">¥2,172</span></span>
+          <span class="inv-pill"><span class="sk">EC7179</span> <span class="am">¥2,041</span></span>
+          <span class="inv-pill"><span class="sk">EC7287</span> <span class="am">¥1,622</span></span></div>
+        <div style="color:var(--red);margin-bottom:4px"><b>🔴271-365天 严重 ¥2.0万 (3.3%):</b><br>
+          <span class="inv-pill"><span class="sk">EB125</span> <span class="am">¥6,016</span></span>
+          <span class="inv-pill"><span class="sk">EC1701</span> <span class="am">¥4,478</span></span>
+          <span class="inv-pill"><span class="sk">EC7287</span> <span class="am">¥1,664</span></span>
+          <span class="inv-pill"><span class="sk">EC7289</span> <span class="am">¥1,414</span></span>
+          <span class="inv-pill"><span class="sk">EC6817</span> <span class="am">¥1,392</span></span></div>
+        <div style="color:var(--red)"><b>365天+ ¥1,851 (0.3%):</b>
+          <span class="inv-pill"><span class="sk">EC6800</span> <span class="am">¥1,342</span></span>
+          <span class="inv-pill"><span class="sk">EC7230</span> <span class="am">¥302</span></span>
+          <span class="inv-pill"><span class="sk">EC1703</span> <span class="am">¥208</span></span></div>
+      </div>
+    </div>
+    <!-- AU -->
+    <div style="background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:14px">
+      <div class="site-toggle" onclick="this.parentElement.classList.toggle('expanded')" style="cursor:pointer;display:flex;justify-content:space-between;align-items:center">
+        <div><span style="font-size:14px;font-weight:700;color:var(--amber)">AU</span><span style="font-size:12px;color:var(--text2);margin-left:8px">总¥44.9万 · 90天+ ¥8.0万(28.0%)</span><span style="font-size:11px;color:var(--amber);margin-left:6px">⚡61-90天 ¥4.6万将滚入</span><span style="font-size:10px;color:var(--text3);margin-left:8px">EC7109 DTL-100 ¥6,619为主，EC7278超半年积压¥3,504</span></div>
+        <span class="toggle-arrow" style="color:var(--text3);font-size:12px;transition:transform .25s">▼</span>
+      </div>
+      <div class="site-detail" style="font-size:11px;color:var(--text2);line-height:1.8;display:none;margin-top:6px">
+        <div style="color:var(--yellow);margin-bottom:4px"><b>⚡61-90天 ¥4.6万 (10.3%) 下月滚入:</b><br>
+          <span class="inv-pill"><span class="sk">EC7109</span> DTL-100 <span class="am">¥6,619</span></span>
+          <span class="inv-pill"><span class="sk">EC3132</span> <span class="am">¥5,975</span></span>
+          <span class="inv-pill"><span class="sk">EB2056</span> Sax <span class="am">¥5,389</span></span>
+          <span class="inv-pill"><span class="sk">EC7243</span> <span class="am">¥5,168</span></span>
+          <span class="inv-pill"><span class="sk">EC7172</span> <span class="am">¥3,816</span></span></div>
+        <div style="color:var(--amber);margin-bottom:4px"><b>🟡91-150天 积压 ¥3.4万 (7.5%):</b><br>
+          <span class="inv-pill"><span class="sk">EC6936</span> DDP-95 <span class="am">¥5,150</span></span>
+          <span class="inv-pill"><span class="sk">EC1382</span> <span class="am">¥3,892</span></span>
+          <span class="inv-pill"><span class="sk">EB2056</span> Sax <span class="am">¥3,593</span></span>
+          <span class="inv-pill"><span class="sk">EC7625</span> <span class="am">¥3,178</span></span>
+          <span class="inv-pill"><span class="sk">EC1380</span> <span class="am">¥3,089</span></span></div>
+        <div style="color:var(--amber);margin-bottom:4px"><b>151-180天 积压 ¥8,202 (1.8%):</b>
+          <span class="inv-pill"><span class="sk">EC1380</span> <span class="am">¥3,089</span></span>
+          <span class="inv-pill"><span class="sk">EC3019</span> <span class="am">¥2,066</span></span>
+          <span class="inv-pill"><span class="sk">EC7513</span> <span class="am">¥1,402</span></span>
+          <span class="inv-pill"><span class="sk">EC6749</span> <span class="am">¥572</span></span>
+          <span class="inv-pill"><span class="sk">EC7520</span> <span class="am">¥559</span></span></div>
+        <div style="margin-top:2px;color:#f97316;margin-bottom:4px"><b>🟠181-270天 严重 ¥2.6万 (5.9%):</b><br>
+          <span class="inv-pill"><span class="sk">EC1289</span> <span class="am">¥4,212</span></span>
+          <span class="inv-pill"><span class="sk">EC1782</span> <span class="am">¥3,560</span></span>
+          <span class="inv-pill"><span class="sk">EC3305</span> <span class="am">¥3,358</span></span>
+          <span class="inv-pill"><span class="sk">EC6642</span> <span class="am">¥2,221</span></span>
+          <span class="inv-pill"><span class="sk">EB2000</span> <span class="am">¥2,056</span></span></div>
+        <div style="color:var(--red)"><b>🔴271-365天 严重 ¥1.1万 (2.5%):</b>
+          <span class="inv-pill"><span class="sk">EC7278</span> <span class="am">¥3,504</span></span>
+          <span class="inv-pill"><span class="sk">EC7288</span> <span class="am">¥2,044</span></span>
+          <span class="inv-pill"><span class="sk">EC7287</span> <span class="am">¥1,788</span></span>
+          <span class="inv-pill"><span class="sk">EC7289</span> <span class="am">¥1,040</span></span>
+          <span class="inv-pill"><span class="sk">EC7290</span> <span class="am">¥957</span></span></div>
+      </div>
+    </div>
+    <!-- UK -->
+    <div style="background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:14px">
+      <div class="site-toggle" onclick="this.parentElement.classList.toggle('expanded')" style="cursor:pointer;display:flex;justify-content:space-between;align-items:center">
+        <div><span style="font-size:14px;font-weight:700;color:var(--red)">UK 🔴</span><span style="font-size:12px;color:var(--text2);margin-left:8px">总¥34.0万 · 90天+ ¥14.9万(60.1%)</span><span style="font-size:11px;color:var(--red);margin-left:6px">仅39.9%健康！</span><span style="font-size:10px;color:var(--text3);margin-left:8px">EC6677超半年¥1.4万+EC7123 DED-80跨段¥2.2万</span></div>
+        <span class="toggle-arrow" style="color:var(--text3);font-size:12px;transition:transform .25s">▼</span>
+      </div>
+      <div class="site-detail" style="font-size:11px;color:var(--text2);line-height:1.8;display:none;margin-top:6px">
+        <div style="color:var(--yellow);margin-bottom:4px"><b>⚡61-90天 ¥5.6万 (16.3%) 下月滚入:</b><br>
+          <span class="inv-pill"><span class="sk">EC7123</span> DED-80 <span class="am">¥13,030</span></span>
+          <span class="inv-pill"><span class="sk">EC7166</span> <span class="am">¥11,442</span></span>
+          <span class="inv-pill"><span class="sk">EC7174</span> DED-70 <span class="am">¥10,903</span></span>
+          <span class="inv-pill"><span class="sk">EC7244</span> DED-70L <span class="am">¥6,460</span></span>
+          <span class="inv-pill"><span class="sk">EC813</span> DP-1 <span class="am">¥1,515</span></span></div>
+        <div style="color:var(--amber);margin-bottom:4px"><b>🟡91-150天 积压 ¥7.7万 (22.7%):</b><br>
+          <span class="inv-pill"><span class="sk">EC7123</span> DED-80 <span class="am">¥8,687</span></span>
+          <span class="inv-pill"><span class="sk">MK3064</span> <span class="am">¥6,988</span></span>
+          <span class="inv-pill"><span class="sk">EC7244</span> DED-70L <span class="am">¥6,460</span></span>
+          <span class="inv-pill"><span class="sk">EC7218</span> DST-80 <span class="am">¥4,024</span></span>
+          <span class="inv-pill"><span class="sk">EC6680</span> <span class="am">¥3,519</span></span></div>
+        <div style="color:var(--amber);margin-bottom:4px"><b>151-180天 积压 ¥3,649 (1.1%):</b>
+          <span class="inv-pill"><span class="sk">EC6961</span> DST-80B <span class="am">¥3,096</span></span>
+          <span class="inv-pill"><span class="sk">MK3064</span> <span class="am">¥446</span></span>
+          <span class="inv-pill"><span class="sk">EC2088</span> <span class="am">¥107</span></span></div>
+        <div style="margin-top:2px;color:#f97316;margin-bottom:4px"><b>🟠181-270天 严重 ¥6.3万 (18.4%):</b><br>
+          <span class="inv-pill"><span class="sk">EC6677</span> <span class="am">¥13,886</span></span>
+          <span class="inv-pill"><span class="sk">EC6680</span> <span class="am">¥8,445</span></span>
+          <span class="inv-pill"><span class="sk">EC6886</span> DED-200L <span class="am">¥7,629</span></span>
+          <span class="inv-pill"><span class="sk">EC1289</span> <span class="am">¥6,318</span></span>
+          <span class="inv-pill"><span class="sk">EC1783</span> <span class="am">¥5,348</span></span></div>
+        <div style="color:var(--red)"><b>🔴271-365天 严重 ¥5,378 (1.6%):</b>
+          <span class="inv-pill"><span class="sk">EC7278</span> <span class="am">¥3,417</span></span>
+          <span class="inv-pill"><span class="sk">EC7000</span> <span class="am">¥651</span></span>
+          <span class="inv-pill"><span class="sk">EC7216</span> <span class="am">¥619</span></span>
+          <span class="inv-pill"><span class="sk">EC748</span> <span class="am">¥519</span></span>
+          <span class="inv-pill"><span class="sk">EC854</span> <span class="am">¥172</span></span></div>
+      </div>
+    </div>
+    <!-- DE -->
+    <div style="background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:14px">
+      <div class="site-toggle" onclick="this.parentElement.classList.toggle('expanded')" style="cursor:pointer;display:flex;justify-content:space-between;align-items:center">
+        <div><span style="font-size:14px;font-weight:700;color:var(--red)">DE 🔴</span><span style="font-size:12px;color:var(--text2);margin-left:8px">总¥26.6万 · 90天+ ¥9.3万(64.7%)</span><span style="font-size:11px;color:var(--red);margin-left:6px">仅35.3%健康！</span><span style="font-size:10px;color:var(--text3);margin-left:8px">EC6942 DDP-95横跨61-150天¥4.7万持续恶化</span></div>
+        <span class="toggle-arrow" style="color:var(--text3);font-size:12px;transition:transform .25s">▼</span>
+      </div>
+      <div class="site-detail" style="font-size:11px;color:var(--text2);line-height:1.8;display:none;margin-top:6px">
+        <div style="color:var(--yellow);margin-bottom:4px"><b>⚡61-90天 ¥7.9万 (29.7%) ⚠最大滚入:</b><br>
+          <span class="inv-pill"><span class="sk">EC6942</span> DDP-95 <span class="am">¥25,699</span></span>
+          <span class="inv-pill"><span class="sk">EC6935</span> <span class="am">¥12,850</span></span>
+          <span class="inv-pill"><span class="sk">EC7347</span> <span class="am">¥12,655</span></span>
+          <span class="inv-pill"><span class="sk">EC6933</span> DEP-1S <span class="am">¥8,985</span></span>
+          <span class="inv-pill"><span class="sk">EC7175</span> DED-70 <span class="am">¥5,451</span></span></div>
+        <div style="color:var(--amber);margin-bottom:4px"><b>🟡91-150天 积压 ¥5.1万 (19.1%):</b><br>
+          <span class="inv-pill"><span class="sk">EC6942</span> DDP-95 <span class="am">¥21,416</span></span>
+          <span class="inv-pill"><span class="sk">EC6935</span> <span class="am">¥17,133</span></span>
+          <span class="inv-pill"><span class="sk">EC7610</span> <span class="am">¥3,642</span></span>
+          <span class="inv-pill"><span class="sk">EC7242</span> <span class="am">¥2,583</span></span>
+          <span class="inv-pill"><span class="sk">EC7187</span> <span class="am">¥2,342</span></span></div>
+        <div style="color:var(--amber);margin-bottom:4px"><b>151-180天 积压 ¥2.0万 (7.4%):</b>
+          <span class="inv-pill"><span class="sk">EC6933</span> DEP-1S <span class="am">¥7,948</span></span>
+          <span class="inv-pill"><span class="sk">EC7511</span> <span class="am">¥3,506</span></span>
+          <span class="inv-pill"><span class="sk">EC7512</span> <span class="am">¥2,804</span></span>
+          <span class="inv-pill"><span class="sk">EC7278</span> <span class="am">¥1,752</span></span>
+          <span class="inv-pill"><span class="sk">EC6942</span> DDP-95 <span class="am">¥1,713</span></span></div>
+        <div style="margin-top:2px;color:#f97316"><b>🟠181-270天 严重 ¥2.3万 (8.5%):</b>
+          <span class="inv-pill"><span class="sk">EC7109</span> DTL-100 <span class="am">¥8,605</span></span>
+          <span class="inv-pill"><span class="sk">EC7511</span> <span class="am">¥5,609</span></span>
+          <span class="inv-pill"><span class="sk">MK3064</span> <span class="am">¥3,271</span></span>
+          <span class="inv-pill"><span class="sk">EC7234</span> <span class="am">¥2,964</span></span>
+          <span class="inv-pill"><span class="sk">EC7278</span> <span class="am">¥1,139</span></span></div>
+      </div>
+    </div>
+    <!-- CA -->
+    <div style="background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:14px">
+      <div><span style="font-size:14px;font-weight:700;color:var(--red)">CA</span><span style="font-size:12px;color:var(--text2);margin-left:8px">总¥1,356 · 全部积压 · 金额极小可忽略</span></div>
+    </div>
+  </div>
+
+  <div class="reason" style="margin-top:16px"><b>关键信号：</b>UK和DE库存结构严重恶化——UK仅39.9%库存健康，DE仅35.3%。更紧迫的是DE 61-90天段高达¥7.9万(29.7%)，下月全部滚入90天+积压，届时DE积压率将飙升至94.4%。UK 61-90天段¥5.6万也比较高。建议UK/DE 8月集中清仓DED-70/DED-80电鼓系列库存(合计积压超¥3万)，阻断滚雪球效应。</div>
+  </div>
+</div>
+
+<!-- ========== SECTION 4: 毛利分析 ========== -->
+<div class="section collapsed ani ani-d9">
+  <div class="section-header">
+    <h2><span class="tag tag-amber">毛利</span> 月毛利分析（不含渠道其他费）</h2>
+    <div style="display:flex;align-items:center"><span class="tag tag-green" style="font-size:13px">¥31.6万 · 达成106% ✓</span><span class="sec-arrow">▼</span></div>
+  </div>
+  <div class="sec-preview"><b>毛利 ¥316,470 达成106% ✓</b> · 毛利率20.4% · AU+US双支柱占74%<br>🔑 8月链接控制在8000条内(现1万) · 降ERP成本 · CA站EC1407申请报损(无忧达不支持eBay已积压100%)</div>
+  <div class="section-body">
+
+  <table class="ogsm-table">
+    <tr><th>OGSM</th><th>内容</th></tr>
+    <tr>
+      <td>O · 目标</td>
+      <td>7月毛利额 <b>¥298,517</b></td>
+    </tr>
+    <tr>
+      <td>G · 结果</td>
+      <td><b>调整后毛利 ¥316,470</b>（基于4-6月基准费率重算），达成率 <b style="color:var(--green)">106.0% ✓</b>。AU(¥11.3万)和US(¥12.1万)为利润双支柱。总销售收入¥154.9万，日均毛利¥10,209</td>
+    </tr>
+    <tr>
+      <td>S · 策略</td>
+      <td>守住毛利率≥18%红线 · DE降本(佣金7.1%+退款7.5%) · 各站对标4-6月基准费率 · FBA分销作为毛利补充 · 8月链接数控制在<b>8000条</b>以内(现1万条)，逐步降低ERP图片依赖和成本 · CA站EC1407申请报损(无忧达不支持eBay已积压100%)</td>
+    </tr>
+    <tr>
+      <td>M · 衡量</td>
+      <td>销售成本率 <b><40%</b> · 毛利率（不含渠道其他费）<b>>18%</b></td>
+    </tr>
+  </table>
+
+  <div class="mini-grid" style="grid-template-columns: repeat(3,1fr)">
+    <div class="mini-card" style="text-align:center"><div class="mc-label">总毛利</div><div class="mc-value" style="color:var(--green)">¥31.6万</div><div class="mc-sub" style="color:var(--green)">目标29.9万 · 106% ✓</div></div>
+    <div class="mini-card" style="text-align:center"><div class="mc-label">毛利率</div><div class="mc-value" style="color:var(--green)">20.4%</div><div class="mc-sub">超20%目标线</div></div>
+    <div class="mini-card" style="text-align:center"><div class="mc-label">月度对比</div><div class="mc-value">↑</div><div class="mc-sub">基准费率口径达成目标</div></div>
+  </div>
+
+  <h3>各站点毛利分析（不含渠道其他费）</h3>
+  <table class="data-table">
+    <tr><th>站点</th><th>毛利</th><th>毛利率</th><th>销售成本率</th><th>佣金率</th><th>配送费率</th><th>广告费率</th><th>仓储费率</th><th>退款率</th><th>环比</th><th>利润驱动SKU</th></tr>
+    <tr style="border-left:3px solid var(--green)">
+      <td>🇦🇺 AU</td><td class="num" style="color:var(--green)">¥113,036</td><td class="num" style="color:var(--green)">22.2%</td><td class="num" style="color:var(--green)">40.3%</td><td class="num">10.8%</td><td class="num" style="color:var(--amber)">16.5%</td><td class="num" style="color:var(--green)">4.9%</td><td class="num">2.7%</td><td class="num" style="color:var(--green)">2.6%</td><td class="num" style="color:var(--green)">↑</td><td style="font-size:11px;color:var(--text2)"><span style="color:var(--green);font-weight:700">增利：</span>DDP-80 PLUS +¥4,297 · DDP-95 +¥3,268<br><span style="color:var(--red);font-weight:700">减利：</span>DED-70澳标 -¥3,465</td>
+    </tr>
+    <tr style="border-left:3px solid var(--green)">
+      <td>🇺🇸 US</td><td class="num" style="color:var(--green)">¥121,008</td><td class="num" style="color:var(--green)">20.1%</td><td class="num">40.5%</td><td class="num" style="color:var(--green)">9.2%</td><td class="num" style="color:var(--amber)">15.2%</td><td class="num" style="color:var(--amber)">5.6%</td><td class="num">3.0%</td><td class="num" style="color:var(--red)">6.4%</td><td class="num">→</td><td style="font-size:11px;color:var(--text2)"><span style="color:var(--green);font-weight:700">增利：</span>EB2056萨克斯 +¥6,714 · HLX-500 +¥4,532<br><span style="color:var(--red);font-weight:700">减利：</span>EC6917 -¥6,611 · EC7356 -¥6,025</td>
+    </tr>
+    <tr style="border-left:3px solid var(--amber)">
+      <td>🇬🇧 UK</td><td class="num" style="color:var(--green)">¥51,093</td><td class="num" style="color:var(--green)">21.8%</td><td class="num" style="color:var(--green)">39.9%</td><td class="num" style="color:var(--red)">13.8%</td><td class="num" style="color:var(--green)">7.8%</td><td class="num" style="color:var(--red)">7.1%</td><td class="num">3.8%</td><td class="num" style="color:var(--amber)">5.9%</td><td class="num">↑</td><td style="font-size:11px;color:var(--text2)"><span style="color:var(--green);font-weight:700">增利：</span>MAMP5功放 +¥2,721 · HUSH-X PRO +¥2,717<br><span style="color:var(--red);font-weight:700">减利：</span>EC6509 -¥2,689 · DED-70 -¥2,375</td>
+    </tr>
+    <tr style="border-left:3px solid var(--amber)">
+      <td>🇩🇪 DE</td><td class="num" style="color:var(--green)">¥30,402</td><td class="num" style="color:var(--amber)">17.1%</td><td class="num" style="color:var(--red)">43.6%</td><td class="num" style="color:var(--amber)">12.0%</td><td class="num" style="color:var(--green)">7.7%</td><td class="num" style="color:var(--red)">7.1%</td><td class="num" style="color:var(--red)">4.9%</td><td class="num" style="color:var(--red)">7.5%</td><td class="num">→</td><td style="font-size:11px;color:var(--text2)"><span style="color:var(--green);font-weight:700">增利：</span>EC7109 DTL-100 +¥2,652 · EC6808 +¥2,139<br><span style="color:var(--red);font-weight:700">减利：</span>EC7175 DED-70 -¥4,152 · EC6722 -¥3,499</td>
+    </tr>
+    <tr style="border-left:3px solid var(--text3)">
+      <td>🇨🇦 CA</td><td class="num">¥931</td><td class="num" style="color:var(--amber)">8.1%</td><td class="num" style="color:var(--red)">50.7%</td><td class="num">10.4%</td><td class="num" style="color:var(--red)">19.5%</td><td class="num" style="color:var(--green)">0.3%</td><td class="num" style="color:var(--green)">1.0%</td><td class="num" style="color:var(--red)">10.0%</td><td class="num">→</td><td style="font-size:11px;color:var(--text2)"><span style="color:var(--green);font-weight:700">增利：</span>EC1407 +¥584<br><span style="color:var(--red);font-weight:700">减利：</span>EC6694停售 -¥2,838<br><span style="color:var(--amber);font-size:10px">⚠ EC1407无忧达不支持eBay，积压100%持续产生仓储费，建议申请报损</span></td>
+    </tr>
+  </table>
+
+  <div class="reason" style="margin-top:14px"><b>关键发现：</b>不含渠道其他费后，AU(¥11.3万)和US(¥12.1万)为利润双支柱，合计占74%。UK(¥5.1万)健康增长。DE虽从亏损转为盈利¥3.0万但毛利率仅17.1%，销售成本率43.6%+退款率7.5%仍需警惕。整体达成106%已超目标，8月需维持US/AU增速。</div>
+  </div>
+</div>
+
+<!-- ========== SECTION 5: 新品分析 ========== -->
+<div class="section collapsed ani ani-d10">
+  <div class="section-header">
+    <h2><span class="tag tag-blue">新品</span> 站点新品达成分析</h2>
+    <div style="display:flex;align-items:center"><span class="tag tag-blue" style="font-size:13px">UK 73%领先 · DE仅6.7%毛利</span><span class="sec-arrow">▼</span></div>
+  </div>
+  <div class="sec-preview"><b>整体销量达成53.8%</b> · UK三率全面领先(73/76/67%) · <span style="color:var(--red);font-weight:700">DE毛利仅6.7%</span><br>🔑 DE断货SKU优先补货(EC7180/EC7689) · 长笛+133%萨克斯+60%开学季拉升 · US需紧急补货EC7713/7179</div>
+  <div class="section-body">
+
+  <table class="ogsm-table">
+    <tr><th>OGSM</th><th>内容</th></tr>
+    <tr><td>O · 目标</td><td>新品按测算目标达成销量/收入/毛利（SPU达成分析看板+新品目标完成情况双数据源）</td></tr>
+    <tr><td>G · 结果</td><td>整体销量<b>53.8%</b>（9,678/18,004件），收入45.8%，毛利46.8%。UK最优(73/76/67%)，DE毛利仅<b style="color:var(--red)">6.7%</b></td></tr>
+    <tr><td>S · 策略</td><td>DE断货SKU(EC7180/EC7689)优先补货 · 长笛/萨克斯管弦乐品类开学季推新 · EC7713/7179紧急补货恢复US销量 · UK三率领先复制策略到AU</td></tr>
+  </table>
+
+  <div class="mini-grid" style="grid-template-columns: repeat(4,1fr)">
+    <div class="mini-card" style="text-align:center"><div class="mc-label">🇬🇧 UK</div><div class="mc-value" style="color:var(--green)">73.1%</div><div class="mc-sub">销量1282/1754 · 最优</div></div>
+    <div class="mini-card" style="text-align:center"><div class="mc-label">🇺🇸 US</div><div class="mc-value" style="color:var(--amber)">56.3%</div><div class="mc-sub">销量5332/9466 · 体量最大</div></div>
+    <div class="mini-card" style="text-align:center"><div class="mc-label">🇦🇺 AU</div><div class="mc-value" style="color:var(--amber)">52.8%</div><div class="mc-sub">销量2007/3798</div></div>
+    <div class="mini-card" style="text-align:center"><div class="mc-label">🇩🇪 DE</div><div class="mc-value" style="color:var(--red)">35.4%</div><div class="mc-sub" style="color:var(--red)">销量1057/2986 · 严重拖后</div></div>
+  </div>
+
+  <h3>各站点达成率</h3>
+  <table class="data-table">
+    <tr><th>站点</th><th>销量达成</th><th>收入达成</th><th>毛利达成</th><th>Top SKU（按销量）</th><th>超额 / 滞后</th></tr>
+    <tr style="border-left:3px solid var(--green)">
+      <td>🇬🇧 UK</td>
+      <td class="num" style="color:var(--green)">73.1%</td>
+      <td class="num" style="color:var(--green)">76.2%</td>
+      <td class="num" style="color:var(--green)">67.1%</td>
+      <td style="font-size:10px;color:var(--text3)"><span class="sku-code">EC7166</span> DED-70 193件<br><span class="sku-code">EC7174</span> DED-70 163件<br><span class="sku-code">EC7123</span> DED-80 160件</td>
+      <td style="font-size:10px;color:var(--text3)">🔺EC7166 217% · EC7628 153%<br>🔻销量: EC7123 0%<br>🔻毛利: EC7466 0% · EC7216 9%</td>
+    </tr>
+    <tr style="border-left:3px solid var(--amber)">
+      <td>🇺🇸 US</td>
+      <td class="num" style="color:var(--amber)">56.3%</td>
+      <td class="num" style="color:var(--amber)">44.5%</td>
+      <td class="num" style="color:var(--amber)">63.2%</td>
+      <td style="font-size:10px;color:var(--text3)"><span class="sku-code">EC7173</span> DED-70 483件<br><span class="sku-code">EC7168</span> DED-70 267件<br><span class="sku-code">EC7184</span> DBM-50 234件</td>
+      <td style="font-size:10px;color:var(--text3)">🔺EC7484 187% · EC7144 151%<br>🔻销量: EC7713 5% · EC7179 7%<br>🔻毛利: EC7291 0% · EC7466 0%</td>
+    </tr>
+    <tr style="border-left:3px solid var(--amber)">
+      <td>🇦🇺 AU</td>
+      <td class="num" style="color:var(--amber)">52.8%</td>
+      <td class="num" style="color:var(--amber)">49.1%</td>
+      <td class="num" style="color:var(--amber)">50.5%</td>
+      <td style="font-size:10px;color:var(--text3)"><span class="sku-code">EC7172</span> DED-70 328件<br><span class="sku-code">EC7122</span> DED-80 260件<br><span class="sku-code">EC7170</span> DED-70 248件</td>
+      <td style="font-size:10px;color:var(--text3)">🔺EC7315 138% · EC7243 108%<br>🔻销量: EC7183 8% · EC7291 16%<br>🔻毛利: EC7111 0%</td>
+    </tr>
+    <tr style="border-left:3px solid var(--red)">
+      <td>🇩🇪 DE</td>
+      <td class="num" style="color:var(--red)">35.4%</td>
+      <td class="num" style="color:var(--red)">28.5%</td>
+      <td class="num" style="color:var(--red)">6.7%</td>
+      <td style="font-size:10px;color:var(--text3)"><span class="sku-code">EC7175</span> DED-70 148件<br><span class="sku-code">EC7265</span> 102件<br><span class="sku-code">EC7121</span> DED-80 84件</td>
+      <td style="font-size:10px;color:var(--text3)">🔻销量: EC7180 0% · EC7689 5%<br>🔻毛利: EC7291 0% · MK3085 0%<br><span style="color:var(--text3)">⚠ 无SKU超额</span></td>
+    </tr>
+  </table>
+
+  <div class="reason" style="margin-top:14px"><b>关键发现：</b>UK三率全面领先(73%/76%/67%)，DE全面落后——毛利仅6.7%主因定价偏低+断货(EC7180零销量)。US体量最大但收入达成不到一半(44.5%)，EC7713/EC7179断货是核心拖累。</div>
+  </div>
+</div>
+
+
+<!-- FOOTER -->
+<div class="ani ani-d10" style="text-align:center;padding:32px 0 16px;color:var(--text3);font-size:12px">
+  销售中心 三方渠道 · eBay 7月月报 · OGSM 框架 · 数据来源：三方销售分析报表 / 广告报表 / 库龄数据 / 新品达成报表
+</div>
+
+<script>
+Chart.register(ChartDataLabels);
+
+// Section collapse toggle
+document.querySelectorAll('.section-header').forEach(h => {
+  h.onclick = function(e) {
+    if (e.target.closest('button, a, .carousel-btn, .carousel-dot')) return;
+    var s = this.closest('.section');
+    if (s) s.classList.toggle('collapsed');
+  };
+});
+const charts = {};
+const carouselIdx = {};
+
+function slideCarousel(modalId, dir, targetIdx) {
+  const slides = document.getElementById(modalId + '_slides');
+  if (!slides) return;
+  const total = slides.children.length;
+  if (carouselIdx[modalId] === undefined) carouselIdx[modalId] = 0;
+  if (targetIdx !== undefined) carouselIdx[modalId] = targetIdx;
+  else carouselIdx[modalId] = (carouselIdx[modalId] + dir + total) % total;
+  slides.style.transform = 'translateX(-' + (carouselIdx[modalId] * 100) + '%)';
+  // Update dots
+  const dots = slides.parentElement.parentElement.querySelectorAll('.carousel-dot');
+  dots.forEach((d, i) => d.classList.toggle('active', i === carouselIdx[modalId]));
+  // Build chart for Ken/Cora slide if needed
+  if (modalId === 'siteModal' && carouselIdx[modalId] === 1 && !charts['siteModal_ken']) {
+    charts['siteModal_ken'] = new Chart(document.getElementById('chart_site_ken').getContext('2d'), {
+      type: 'doughnut',
+      data: {
+        labels: ['Ken $134,130','Cora $118,207'],
+        datasets: [{ data: [134130,118207], backgroundColor: ['#3b82f6','#22c55e'], borderColor: '#e2e5e9', borderWidth: 4 }]
+      },
+      options: {
+        responsive: true, cutout: '55%',
+        layout: { padding: { top: 24, bottom: 24, left: 24, right: 24 } },
+        plugins: {
+          legend: { position: 'bottom', labels: { color: '#1a1a2e', font: { size: 13 }, padding: 16, usePointStyle: true, pointStyleWidth: 10, generateLabels: function(chart) { return chart.data.labels.map((l,i)=>({text:l+' ('+(i===0?'53.2':'46.8')+'%)',fillStyle:['#3b82f6','#22c55e'][i],strokeStyle:['#3b82f6','#22c55e'][i],fontColor:'#1a1a2e',index:i,hidden:false,pointStyle:'circle'})); } } },
+          tooltip: { enabled: false },
+          datalabels: { display: true, color: '#1a1a2e', font: { size: 12, weight: 'bold' }, formatter: (v,ctx) => (v/252337*100).toFixed(1)+'%', anchor: 'end', align: 'end', offset: 6, clip: false }
+        },
+        animation: { animateRotate: true, duration: 800 }
+      }
+    });
+  }
+  // Build chart for inventory site slide
+  if (modalId === 'invModal' && carouselIdx[modalId] === 1 && !charts['invModal_site']) {
+    const itotal = 400644;
+    const ivals = [77905,79522,148815,93046,1356];
+    const inames = ['US','AU','UK','DE','CA'];
+    const icolors = ['#f59e0b','#3b82f6','#ef4444','#a855f7','#14b8a6'];
+    charts['invModal_site'] = new Chart(document.getElementById('chart_inv_site').getContext('2d'), {
+      type: 'doughnut',
+      data: { labels: inames, datasets: [{ data: ivals, backgroundColor: icolors, borderColor: '#e2e5e9', borderWidth: 3 }] },
+      options: {
+        responsive: true, cutout: '48%',
+        layout: { padding: { top: 24, bottom: 24, left: 24, right: 24 } },
+        plugins: {
+          legend: { position: 'bottom', labels: { color: '#1a1a2e', font: { size: 13 }, padding: 18, usePointStyle: true, pointStyleWidth: 10, generateLabels: function(chart) {
+            return chart.data.labels.map((l,i) => ({ text: l + '  ¥' + ivals[i].toLocaleString() + '  ' + (ivals[i]/itotal*100).toFixed(1) + '%', fillStyle: icolors[i], strokeStyle: icolors[i], fontColor: '#1a1a2e', index: i, hidden: false, pointStyle: 'rectRounded' }));
+          }}},
+          tooltip: { enabled: false },
+          datalabels: {
+            display: (ctx) => (ctx.dataset.data[ctx.dataIndex] / itotal * 100) >= 5,
+            color: '#1a1a2e', font: { size: 11, weight: 'bold' }, anchor: 'center', clamp: true,
+            formatter: (v) => (v/itotal*100).toFixed(1) + '%'
+          }
+        },
+        animation: { animateRotate: true, duration: 900 }
+      }
+    });
+  }
+}
+
+function openModal(id) {
+  document.getElementById(id).classList.add('show');
+  if (!charts[id]) buildChart(id);
+}
+function closeModal(id) {
+  document.getElementById(id).classList.remove('show');
+}
+document.addEventListener('keydown', e => { if (e.key==='Escape') document.querySelectorAll('.modal-overlay.show').forEach(m=>m.classList.remove('show')); });
+
+function buildChart(id) {
+  const darkOpts = (extra) => ({
+    responsive: true,
+    plugins: {
+      legend: { display: true, position: 'bottom', labels: { color: '#1a1a2e', padding: 18, font: { size: 13 }, usePointStyle: true, pointStyleWidth: 12, generateLabels: undefined } },
+      tooltip: { enabled: false },
+      datalabels: { display: false }
+    },
+    ...extra
+  });
+
+  if (id === 'siteModal') {
+    const total = 252337;
+    const vals = [106604,72341,38418,31918,1818,1015,222];
+    const names = ['US','AU','UK','DE','CA','FR','ES'];
+    const colors = ['#f59e0b','#3b82f6','#22c55e','#a855f7','#ef4444','#ec4899','#14b8a6'];
+    charts[id] = new Chart(document.getElementById('chart_site').getContext('2d'), {
+      type: 'doughnut',
+      data: { labels: names, datasets: [{ data: vals, backgroundColor: colors, borderColor: '#e2e5e9', borderWidth: 3 }] },
+      options: darkOpts({
+        cutout: '48%',
+        layout: { padding: { top: 40, bottom: 40, left: 40, right: 40 } },
+        plugins: {
+          legend: { ...darkOpts().plugins.legend, labels: { ...darkOpts().plugins.legend.labels, generateLabels: function(chart) {
+            return chart.data.labels.map((l,i) => ({ text: l + '  $' + vals[i].toLocaleString() + '  ' + (vals[i]/total*100).toFixed(1) + '%', fillStyle: colors[i], strokeStyle: colors[i], fontColor: '#1a1a2e', index: i, hidden: false, pointStyle: 'rectRounded' }));
+          }}},
+          tooltip: { enabled: false },
+          datalabels: {
+            display: (ctx) => (ctx.dataset.data[ctx.dataIndex] / total * 100) >= 5,
+            color: '#1a1a2e',
+            font: { size: 11, weight: 'bold' },
+            anchor: 'center',
+            clamp: true,
+            formatter: (v,ctx) => (v/total*100).toFixed(1) + '%'
+          }
+        },
+        animation: { animateRotate: true, duration: 900 }
+      })
+    });
+  }
+
+  if (id === 'adModal') {
+    const stores = ['蓝易','翻新(美)','翻新(德)','德店','英店','澳店','美店'];
+    const acoas  = [0.32, 3.93, 5.23, 5.68, 5.84, 6.65, 6.86];
+    const roas   = [48.28, 11.66, 12.52, 12.80, 12.62, 13.85, 11.05];
+    charts[id] = new Chart(document.getElementById('chart_ad').getContext('2d'), {
+      type: 'bar',
+      data: {
+        labels: stores,
+        datasets: [
+          { label: 'ACOAS (%)', data: acoas, backgroundColor: '#f59e0b', borderRadius: 4, borderSkipped: false, order: 1 },
+          { label: 'ROAS', data: roas, backgroundColor: '#3b82f6', borderRadius: 4, borderSkipped: false, order: 1 }
+        ]
+      },
+      options: darkOpts({
+        indexAxis: 'y',
+        scales: {
+          x: { grid: { color: '#27272a' }, ticks: { color: '#a1a1aa', font: { size: 12 } }, stacked: false },
+          y: { grid: { display: false }, ticks: { color: '#1a1a2e', font: { size: 13 } } }
+        },
+        plugins: {
+          legend: { display: true, position: 'top', labels: { color: '#1a1a2e', font: { size: 12 }, padding: 12, usePointStyle: true, pointStyleWidth: 10 } },
+          tooltip: { enabled: false },
+          datalabels: {
+            display: true,
+            color: '#1a1a2e',
+            font: { size: 10, weight: 'bold' },
+            anchor: 'end', align: 'end', offset: 2, clip: false,
+            formatter: (v,ctx) => ctx.datasetIndex === 0 ? v + '%' : v.toFixed(1)
+          }
+        },
+        animation: { duration: 700 }
+      })
+    });
+    charts[id + '_site'] = new Chart(document.getElementById('chart_ad_site').getContext('2d'), {
+      type: 'bar',
+      data: {
+        labels: ['US','AU','UK','DE'],
+        datasets: [
+          { label: '广告费率 %', data: [5.63, 4.93, 7.05, 7.11], backgroundColor: ['#3b82f6','#22c55e','#8b5cf6','#ef4444'], borderRadius: 6, barThickness: 50 },
+          { label: '', data: [7,7,7,7], backgroundColor: 'transparent', borderColor: 'rgba(255,255,255,0.3)', borderWidth: 2, borderDash: [6,4], type: 'line', pointRadius: 0, datalabels: { display: false } }
+        ]
+      },
+      options: darkOpts({
+        scales: {
+          x: { ticks: { color: '#5c6370' }, grid: { display: false } },
+          y: { ticks: { color: '#5c6370', callback: v => v+'%' }, grid: { color: 'rgba(0,0,0,0.06)' }, min: 0, max: 12 }
+        },
+        plugins: {
+          legend: { ...darkOpts().plugins.legend, labels: { ...darkOpts().plugins.legend.labels, color: '#1a1a2e' } },
+          datalabels: { display: true, color: '#1a1a2e', font: { size: 12, weight: 'bold' }, anchor: 'end', align: 'top', offset: 4, formatter: v => v.toFixed(2)+'%' }
+        },
+        animation: { duration: 700 }
+      })
+    });
+  }
+
+  if (id === 'invModal') {
+    const vals = [528410,429082,357302,284910,114774];
+    const names = ['0-30天','31-60天','61-90天','91-180天','180天+'];
+    const colors = ['#22c55e','#3b82f6','#f59e0b','#f97316','#ef4444'];
+    const total = 1714478;
+    charts[id] = new Chart(document.getElementById('chart_inv').getContext('2d'), {
+      type: 'doughnut',
+      data: { labels: names, datasets: [{ data: vals, backgroundColor: colors, borderColor: '#e2e5e9', borderWidth: 3 }] },
+      options: darkOpts({
+        cutout: '48%',
+        layout: { padding: { top: 40, bottom: 40, left: 40, right: 40 } },
+        plugins: {
+          legend: { ...darkOpts().plugins.legend, labels: { ...darkOpts().plugins.legend.labels, generateLabels: function(chart) {
+            return chart.data.labels.map((l,i) => ({ text: l + '  ¥' + (vals[i]/10000).toFixed(1) + '万  ' + (vals[i]/total*100).toFixed(1) + '%', fillStyle: colors[i], strokeStyle: colors[i], fontColor: '#1a1a2e', index: i, hidden: false, pointStyle: 'rectRounded' }));
+          }}},
+          tooltip: { enabled: false },
+          datalabels: {
+            display: (ctx) => (ctx.dataset.data[ctx.dataIndex] / total * 100) >= 5,
+            color: '#1a1a2e',
+            font: { size: 11, weight: 'bold' },
+            anchor: 'center',
+            clamp: true,
+            formatter: (v,ctx) => (v/total*100).toFixed(1) + '%'
+          }
+        },
+        animation: { animateRotate: true, duration: 900 }
+      })
+    });
+  }
+
+  if (id === 'newModal') {
+    const vals = [414726, 188782];
+    const total = 603508;
+    charts[id] = new Chart(document.getElementById('chart_new_pie').getContext('2d'), {
+      type: 'doughnut',
+      data: {
+        labels: ['Ken','Cora'],
+        datasets: [{ data: vals, backgroundColor: ['#3b82f6','#22c55e'], borderColor: '#e2e5e9', borderWidth: 4 }]
+      },
+      options: darkOpts({
+        cutout: '55%',
+        plugins: {
+          legend: { ...darkOpts().plugins.legend, labels: { ...darkOpts().plugins.legend.labels, generateLabels: function(chart) {
+            return chart.data.labels.map((l,i) => {
+              const pct = (vals[i]/total*100).toFixed(0);
+              const name = l === 'Ken' ? 'Ken (US+DE)' : 'Cora (AU+UK)';
+              return { text: name + '  ¥' + (vals[i]/10000).toFixed(1) + '万  ' + pct + '%', fillStyle: ['#3b82f6','#22c55e'][i], strokeStyle: ['#3b82f6','#22c55e'][i], fontColor: '#1a1a2e', index: i, hidden: false, pointStyle: 'circle' };
+            });
+          }}},
+          tooltip: { enabled: false },
+          datalabels: {
+            display: (ctx) => (ctx.dataset.data[ctx.dataIndex] / total * 100) >= 5,
+            color: '#1a1a2e',
+            font: { size: 12, weight: 'bold' },
+            anchor: 'center',
+            clamp: true,
+            formatter: (v,ctx) => (v/total*100).toFixed(0) + '%'
+          }
+        },
+        animation: { animateRotate: true, duration: 800 }
+      })
+    });
+  }
+  if (id === 'profitModal') {
+    const profitVals = [113036, 121008, 51093, 30402, 931, 0, 0];
+    const profitTotal = 316470;
+    const profitLabels = ['AU','US','UK','DE','CA','ES','FR'];
+    const profitColors = ['#22c55e','#3b82f6','#8b5cf6','#ef4444','#64748b','#a3e635','#f59e0b'];
+    charts[id + '_site'] = new Chart(document.getElementById('chart_profit').getContext('2d'), {
+      type: 'doughnut',
+      data: { labels: profitLabels, datasets: [{ data: profitVals, backgroundColor: profitColors, borderColor: '#e2e5e9', borderWidth: 4 }] },
+      options: darkOpts({
+        cutout: '55%',
+        plugins: {
+          legend: { ...darkOpts().plugins.legend, labels: { ...darkOpts().plugins.legend.labels, generateLabels: function(chart) {
+            return chart.data.labels.map((l,i) => {
+              const pct = (Math.abs(profitVals[i])/Math.abs(profitTotal)*100).toFixed(0);
+              const c = profitVals[i] >= 0 ? '¥'+Math.abs(profitVals[i]/10000).toFixed(1)+'万' : '-¥'+Math.abs(profitVals[i]/10000).toFixed(1)+'万';
+              return { text: l + ' ' + c + ' ' + pct + '%', fillStyle: profitColors[i], strokeStyle: profitColors[i], fontColor: '#1a1a2e', index: i, hidden: false, pointStyle: 'circle' };
+            });
+          }}},
+          tooltip: { enabled: false },
+          datalabels: {
+            display: (ctx) => (Math.abs(profitVals[ctx.dataIndex]) / Math.abs(profitTotal) * 100) >= 5,
+            color: '#1a1a2e', font: { size: 11, weight: 'bold' },
+            anchor: 'center', clamp: true,
+            formatter: (v,ctx) => (Math.abs(v)/Math.abs(profitTotal)*100).toFixed(0) + '%'
+          }
+        },
+        animation: { animateRotate: true, duration: 800 }
+      })
+    });
+    charts[id + '_margin'] = new Chart(document.getElementById('chart_profit_margin').getContext('2d'), {
+      type: 'bar',
+      data: {
+        labels: ['US','AU','UK','DE','CA'],
+        datasets: [
+          { label: '毛利率 %', data: [20.1, 22.2, 21.8, 17.1, 8.1], backgroundColor: ['#3b82f6','#22c55e','#8b5cf6','#ef4444','#64748b'], borderRadius: 6, barThickness: 40 },
+          { label: '', data: [20, 20, 20, 20, 20], backgroundColor: 'transparent', borderColor: 'rgba(255,255,255,0.2)', borderWidth: 2, borderDash: [6,4], type: 'line', pointRadius: 0, datalabels: { display: false } }
+        ]
+      },
+      options: darkOpts({
+        scales: {
+          x: { ticks: { color: '#5c6370' }, grid: { display: false } },
+          y: { ticks: { color: '#5c6370', callback: v => v+'%' }, grid: { color: 'rgba(0,0,0,0.06)' }, min: 0, max: 30 }
+        },
+        plugins: {
+          legend: { ...darkOpts().plugins.legend, labels: { ...darkOpts().plugins.legend.labels, color: '#1a1a2e', filter: function(item) { return item.text !== ''; } } },
+          datalabels: { display: true, color: '#1a1a2e', font: { size: 11, weight: 'bold' }, anchor: 'end', align: 'top', offset: 4, formatter: v => v.toFixed(1)+'%' }
+        },
+        animation: { duration: 800 }
+      })
+    });
+  }
+}
+</script>
+
+</body>
+</html>
