@@ -164,7 +164,7 @@ h3 { font-size: 15px; font-weight: 600; color: var(--text); margin-bottom: 14px;
     -9px 9px 0 #9e8f7b,
     -10px 10px 0 #978772,
     -10px 38px 72px -6px rgba(0,0,0,.25);
-  border-color: rgba(232,89,12,.25);
+  border-color: rgba(140,110,80,.30);
 }
 .section-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 24px; flex-wrap: wrap; gap: 12px; cursor: pointer; user-select: none; }
 .section-header:hover .sec-arrow { color: var(--accent); }
@@ -214,7 +214,7 @@ h3 { font-size: 15px; font-weight: 600; color: var(--text); margin-bottom: 14px;
 /* Auto-hover: sequential shimmer wave across KPI cards */
 @keyframes kpiShimmer {
   0%, 100% { box-shadow: var(--shadow-md); }
-  50% { box-shadow: 0 12px 48px rgba(232,89,12,.30), 0 4px 16px rgba(0,0,0,.10); }
+  50% { box-shadow: 0 12px 48px rgba(140,110,80,.25), 0 4px 16px rgba(0,0,0,.08); }
 }
 @keyframes kpiLift {
   0%, 100% { transform: translateY(0); }
@@ -231,7 +231,7 @@ h3 { font-size: 15px; font-weight: 600; color: var(--text); margin-bottom: 14px;
 .kpi-card:hover {
   animation: none !important;
   transform: translateY(-6px) !important;
-  box-shadow: 0 12px 40px rgba(232,89,12,.25), 0 4px 12px rgba(0,0,0,.08) !important;
+  box-shadow: 0 12px 40px rgba(140,110,80,.20), 0 4px 12px rgba(0,0,0,.06) !important;
 }
 
 @media (max-width: 860px) {
