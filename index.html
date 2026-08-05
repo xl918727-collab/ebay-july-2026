@@ -115,36 +115,36 @@ h3 { font-size: 15px; font-weight: 600; color: var(--text); margin-bottom: 14px;
 /* Sections — 3D stone slab with visible edge thickness */
 .section {
   position: relative;
-  background: linear-gradient(175deg, #ffffff 0%, #faf9f7 100%);
-  border: 1px solid rgba(0,0,0,.06);
-  border-radius: 16px; padding: 28px 32px; margin-bottom: 32px;
+  background: #faf8f4;
+  border: 1px solid rgba(0,0,0,.05);
+  border-radius: 16px; padding: 28px 32px; margin-bottom: 34px;
   box-shadow:
-    0 1px 0 rgba(255,255,255,.8) inset,
-    0 20px 50px -15px rgba(0,0,0,.12);
+    0 1px 0 rgba(255,255,255,.95) inset,
+    0 24px 60px -18px rgba(0,0,0,.15);
   transition: transform .3s ease, box-shadow .3s ease;
 }
-/* Stone slab extrusion edge */
+/* Stone slab extrusion edge — same warm family, darker shade */
 .section::before {
   content: "";
   position: absolute;
   inset: 0;
   border-radius: inherit;
   z-index: -1;
-  transform: translate(-6px, 7px);
+  transform: translate(-8px, 10px);
   background: linear-gradient(155deg,
-    #d4cfc8 0%,
-    #b8b2aa 40%,
-    #9a938b 100%
+    #c8bfb2 0%,
+    #b0a696 40%,
+    #968a7a 100%
   );
   box-shadow:
-    inset 0 1px 0 rgba(255,255,255,.45),
-    0 18px 40px -8px rgba(0,0,0,.18);
+    inset 0 1px 0 rgba(255,255,255,.35),
+    0 20px 45px -10px rgba(0,0,0,.20);
 }
 .section:hover {
   transform: translateY(-2px);
   box-shadow:
-    0 1px 0 rgba(255,255,255,.8) inset,
-    0 28px 60px -12px rgba(0,0,0,.18);
+    0 1px 0 rgba(255,255,255,.95) inset,
+    0 32px 70px -16px rgba(0,0,0,.20);
 }
 .section-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 24px; flex-wrap: wrap; gap: 12px; cursor: pointer; user-select: none; }
 .section-header:hover .sec-arrow { color: var(--accent); }
