@@ -132,10 +132,10 @@ h3 { font-size: 15px; font-weight: 600; color: var(--text); margin-bottom: 14px;
     -10px 10px 0 #978772,
     /* Cast shadow on wall */
     -10px 26px 54px -10px rgba(0,0,0,.18);
-  transition: transform .3s ease, box-shadow .3s ease;
+  transition: transform .3s ease, box-shadow .3s ease, border-color .3s ease;
 }
 .section:hover {
-  transform: translateY(-2px);
+  transform: translateY(-4px);
   box-shadow:
     -1px 1px 0 #d8cfc4,
     -2px 2px 0 #d1c7bb,
@@ -147,7 +147,8 @@ h3 { font-size: 15px; font-weight: 600; color: var(--text); margin-bottom: 14px;
     -8px 8px 0 #a59784,
     -9px 9px 0 #9e8f7b,
     -10px 10px 0 #978772,
-    -10px 32px 64px -8px rgba(0,0,0,.22);
+    -10px 38px 72px -6px rgba(0,0,0,.25);
+  border-color: rgba(232,89,12,.25);
 }
 .section-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 24px; flex-wrap: wrap; gap: 12px; cursor: pointer; user-select: none; }
 .section-header:hover .sec-arrow { color: var(--accent); }
