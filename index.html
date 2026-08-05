@@ -169,11 +169,11 @@ h3 { font-size: 15px; font-weight: 600; color: var(--text); margin-bottom: 14px;
 /* Auto-hover: sequential shimmer wave across KPI cards */
 @keyframes kpiShimmer {
   0%, 100% { box-shadow: var(--shadow-md); }
-  50% { box-shadow: 0 8px 32px rgba(232,89,12,.18), 0 2px 8px rgba(0,0,0,.06); }
+  50% { box-shadow: 0 12px 48px rgba(232,89,12,.30), 0 4px 16px rgba(0,0,0,.10); }
 }
 @keyframes kpiLift {
   0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-4px); }
+  40% { transform: translateY(-8px); }
 }
 .kpi-card {
   animation: kpiShimmer 4s ease-in-out infinite, kpiLift 4s ease-in-out infinite;
