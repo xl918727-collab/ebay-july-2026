@@ -57,10 +57,11 @@ body {
 .nav-links { display: flex; gap: 4px; }
 .nav-links a {
   text-decoration: none; color: var(--text2); font-size: 15px; font-weight: 500;
-  padding: 8px 20px; border-radius: 20px; transition: color .15s, background .15s;
+  padding: 8px 20px; border-radius: 20px; border: 1.5px solid var(--border);
+  transition: color .15s, background .15s, border-color .15s, box-shadow .15s;
 }
 .nav-links a:hover,
-.nav-links a:target { color: var(--accent); font-weight: 700; background: var(--accent-bg); }
+.nav-links a:target { color: var(--accent); font-weight: 700; background: var(--accent-bg); border-color: var(--accent); box-shadow: var(--shadow-sm); }
 .nav-links a:active { color: var(--accent); }
 
 h1 { font-size: 32px; font-weight: 800; letter-spacing: -0.03em; }
