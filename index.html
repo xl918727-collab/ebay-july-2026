@@ -112,39 +112,42 @@ h3 { font-size: 15px; font-weight: 600; color: var(--text); margin-bottom: 14px;
 .em-warn { font-weight: 700; color: var(--accent); }
 .em-bad { font-weight: 700; color: var(--red); }
 
-/* Sections — 3D stone slab with visible edge thickness */
+/* Sections — 3D stone slab via box-shadow layers */
 .section {
   position: relative;
   background: #faf8f4;
-  border: 1px solid rgba(0,0,0,.05);
+  border: 1px solid rgba(0,0,0,.04);
   border-radius: 16px; padding: 28px 32px; margin-bottom: 34px;
   box-shadow:
-    0 1px 0 rgba(255,255,255,.95) inset,
-    0 24px 60px -18px rgba(0,0,0,.15);
+    /* Slab edge: stacked 1px shadows — each step slightly darker */
+    -1px 1px 0 #d8cfc4,
+    -2px 2px 0 #d1c7bb,
+    -3px 3px 0 #c9bfb2,
+    -4px 4px 0 #c2b7a9,
+    -5px 5px 0 #bbaf9f,
+    -6px 6px 0 #b3a796,
+    -7px 7px 0 #ac9f8d,
+    -8px 8px 0 #a59784,
+    -9px 9px 0 #9e8f7b,
+    -10px 10px 0 #978772,
+    /* Cast shadow on wall */
+    -10px 26px 54px -10px rgba(0,0,0,.18);
   transition: transform .3s ease, box-shadow .3s ease;
-}
-/* Stone slab extrusion edge — same warm family, darker shade */
-.section::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  z-index: -1;
-  transform: translate(-8px, 10px);
-  background: linear-gradient(155deg,
-    #c8bfb2 0%,
-    #b0a696 40%,
-    #968a7a 100%
-  );
-  box-shadow:
-    inset 0 1px 0 rgba(255,255,255,.35),
-    0 20px 45px -10px rgba(0,0,0,.20);
 }
 .section:hover {
   transform: translateY(-2px);
   box-shadow:
-    0 1px 0 rgba(255,255,255,.95) inset,
-    0 32px 70px -16px rgba(0,0,0,.20);
+    -1px 1px 0 #d8cfc4,
+    -2px 2px 0 #d1c7bb,
+    -3px 3px 0 #c9bfb2,
+    -4px 4px 0 #c2b7a9,
+    -5px 5px 0 #bbaf9f,
+    -6px 6px 0 #b3a796,
+    -7px 7px 0 #ac9f8d,
+    -8px 8px 0 #a59784,
+    -9px 9px 0 #9e8f7b,
+    -10px 10px 0 #978772,
+    -10px 32px 64px -8px rgba(0,0,0,.22);
 }
 .section-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 24px; flex-wrap: wrap; gap: 12px; cursor: pointer; user-select: none; }
 .section-header:hover .sec-arrow { color: var(--accent); }
