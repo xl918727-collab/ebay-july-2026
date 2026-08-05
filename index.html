@@ -50,16 +50,18 @@ body {
 }
 .nav-inner {
   max-width: 1340px; margin: 0 auto;
-  display: flex; justify-content: center; align-items: center;
-  padding: 14px 40px; gap: 8px;
+  display: flex; justify-content: center; align-items: center; gap: 0;
+  padding: 14px 40px;
 }
-.nav-brand { font-size: 17px; font-weight: 700; color: var(--text); text-decoration: none; letter-spacing: -0.02em; margin-right: 24px; }
+.nav-brand { display: none; }
 .nav-links { display: flex; gap: 4px; }
 .nav-links a {
-  text-decoration: none; color: var(--text2); font-size: 14px; font-weight: 500;
-  padding: 8px 18px; border-radius: 20px; transition: all .2s;
+  text-decoration: none; color: var(--text2); font-size: 15px; font-weight: 500;
+  padding: 8px 20px; border-radius: 20px; transition: color .15s, background .15s;
 }
-.nav-links a:hover { background: var(--accent-bg); color: var(--accent); font-weight: 600; }
+.nav-links a:hover,
+.nav-links a:target { color: var(--accent); font-weight: 700; background: var(--accent-bg); }
+.nav-links a:active { color: var(--accent); }
 
 h1 { font-size: 32px; font-weight: 800; letter-spacing: -0.03em; }
 h2 { font-size: 20px; font-weight: 700; margin: 0; display: flex; align-items: center; gap: 10px; }
@@ -210,7 +212,7 @@ h3 { font-size: 15px; font-weight: 600; color: var(--text); margin-bottom: 14px;
 <body>
 <nav class="top-nav" id="topNav">
   <div class="nav-inner">
-    <a href="#" class="nav-brand">eBay 7月月报</a>
+    
     <div class="nav-links">
       <a href="#sales">销售</a>
       <a href="#ads">广告</a>
@@ -1101,6 +1103,20 @@ document.querySelectorAll('.section-header').forEach(h => {
     var s = this.closest('.section');
     if (s) s.classList.toggle('collapsed');
   };
+});
+// Auto-expand section when navigated to via anchor
+function expandTargetSection() {
+  var hash = window.location.hash;
+  if (hash) {
+    var section = document.querySelector(hash);
+    if (section && section.classList.contains('collapsed')) {
+      section.classList.remove('collapsed');
+    }
+  }
+}
+window.addEventListener('hashchange', expandTargetSection);
+window.addEventListener('load', function() {
+  setTimeout(expandTargetSection, 200);
 });
 const charts = {};
 const carouselIdx = {};
